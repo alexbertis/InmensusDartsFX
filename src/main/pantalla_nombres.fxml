@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10" nodeOrientation="LEFT_TO_RIGHT" style="-fx-min-width: 640; -fx-min-height: 360;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+
+   <HBox maxWidth="Infinity" spacing="20.0" GridPane.hgrow="ALWAYS">
+      <VBox maxWidth="Infinity" spacing="6" HBox.hgrow="ALWAYS">
+         <TextField promptText="Nombre 1" />
+         <TextField promptText="Nombre 2" />
+         <TextField promptText="Nombre 3" />
+         <TextField promptText="Nombre 4" />
+      </VBox>
+      <VBox maxWidth="Infinity" spacing="6" HBox.hgrow="ALWAYS">
+         <TextField promptText="Nombre 5" />
+         <TextField promptText="Nombre 6" />
+         <TextField promptText="Nombre 7" />
+         <TextField promptText="Nombre 8" />
+      </VBox>
+      <padding>
+         <Insets left="50.0" right="50.0" />
+      </padding>
+   </HBox>
+
+   <HBox maxWidth="400" spacing="10">
+      <Button maxWidth="Infinity" mnemonicParsing="false" text="Atrás" HBox.hgrow="ALWAYS" />
+      <Button maxWidth="Infinity" mnemonicParsing="false" text="Continuar" HBox.hgrow="ALWAYS" />
+   </HBox>
+</VBox>
