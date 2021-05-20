@@ -3,7 +3,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="CENTER" hgap="10" nodeOrientation="LEFT_TO_RIGHT" style="-fx-min-width: 640; -fx-min-height: 360;" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<GridPane alignment="CENTER" hgap="10" nodeOrientation="LEFT_TO_RIGHT" style="-fx-min-width: 640; -fx-min-height: 360;"
+          vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="main.fxcontrollers.OptionsScreenController">
 
    <Label text="N. de jugadores" />
    <HBox GridPane.columnIndex="1">
@@ -43,8 +45,22 @@
    </HBox>
 
    <HBox GridPane.columnSpan="2" GridPane.rowIndex="5">
-      <Button maxWidth="Infinity" mnemonicParsing="false" text="Atrás" HBox.hgrow="ALWAYS" />
-      <Button maxWidth="Infinity" mnemonicParsing="false" text="Continuar" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btn_opciones_atras" maxWidth="Infinity" mnemonicParsing="false" text="Atrás"
+              HBox.hgrow="ALWAYS" onAction="#handleButtonAction" />
+      <Button fx:id="btn_opciones_continuar" maxWidth="Infinity" mnemonicParsing="false" text="Continuar"
+              HBox.hgrow="ALWAYS" onAction="#handleButtonAction" />
    </HBox>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>
