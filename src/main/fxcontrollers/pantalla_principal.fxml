@@ -4,23 +4,19 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" style="-fx-min-width: 640; -fx-min-height: 360;" vgap="10"
+<GridPane alignment="center" hgap="10" style="-fx-min-width: 640; -fx-min-height: 360;
+-fx-background-image: url(/main/images/elegant_bg.png); -fx-background-size: cover" vgap="10"
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="main.fxcontrollers.MainScreenController">
 
-   <Button fx:id="btn_main_jugar" alignment="CENTER" mnemonicParsing="false" onAction="#handleButtonAction"
-           prefHeight="60.0" prefWidth="180.0" text="Jugar" GridPane.halignment="CENTER">
+   <Button fx:id="btn_main_jugar" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Jugar" GridPane.halignment="CENTER">
       <font>
          <Font size="28.0" />
       </font>
    </Button>
-   <Button fx:id="btn_main_bt_manual" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="26.0"
-           prefWidth="180.0" text="Iniciar Bluetooth manualmente" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
+   <Button fx:id="btn_main_bt_manual" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Iniciar Bluetooth manualmente" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Button>
 </GridPane>
