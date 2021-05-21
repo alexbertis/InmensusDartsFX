@@ -1,0 +1,20 @@
+.label-options {
+    -fx-background-color: #FFFA;
+    -fx-max-width: infinity;
+    -fx-padding: 10;
+    -fx-font-size: 16;
+}
+
+.button-options, .button-options * {
+    -fx-max-height: infinity;
+}
+.button-options {
+    -fx-background-color: #FFFD;
+}
+.button-options * {
+    -fx-background-color: transparent;
+    -fx-font-size: 16;
+}
+.button-options *:selected {
+    -fx-background-color: #4F4A;
+}

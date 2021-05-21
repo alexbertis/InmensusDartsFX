@@ -3,13 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane alignment="CENTER" hgap="10" nodeOrientation="LEFT_TO_RIGHT" style="-fx-min-width: 640; -fx-min-height: 360;
--fx-background-image: url(/main/images/elegant_bg.png); -fx-background-size: cover"
-          vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="main.fxcontrollers.OptionsScreenController">
+<GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="-fx-min-width: 640; -fx-min-height: 360; -fx-background-image: url(/main/images/elegant_bg.png);           -fx-background-size: cover" styleClass="label-options" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.fxcontrollers.OptionsScreenController">
 
-   <Label text="N. de jugadores" />
-   <HBox GridPane.columnIndex="1">
+   <Label styleClass="label-options" text="N. de jugadores" />
+   <HBox styleClass="button-options" GridPane.columnIndex="1">
       <Button maxWidth="Infinity" mnemonicParsing="false" text="1" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="2" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="3" HBox.hgrow="ALWAYS" />
@@ -20,36 +17,46 @@
       <Button maxWidth="Infinity" mnemonicParsing="false" text="8" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label text="Juego" GridPane.rowIndex="1" />
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="1">
+   <Label styleClass="label-options" text="Juego" GridPane.rowIndex="1" />
+   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <Button maxWidth="Infinity" mnemonicParsing="false" text="X01" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="Cricket" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label text="Modo X01" GridPane.rowIndex="2" />
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="2">
+   <Label styleClass="label-options" text="Modo X01" GridPane.rowIndex="2" />
+   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="2">
       <Button maxWidth="Infinity" mnemonicParsing="false" text="301" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="501" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="701" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label text="Rondas" GridPane.rowIndex="3" />
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+   <Label styleClass="label-options" text="Rondas" GridPane.rowIndex="3" />
+   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="3">
       <Button maxWidth="Infinity" mnemonicParsing="false" text="10" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="20" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label text="Modo" GridPane.rowIndex="4" />
-   <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <Label styleClass="label-options" text="Modo" GridPane.rowIndex="4" />
+   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="4">
       <Button maxWidth="Infinity" mnemonicParsing="false" text="Single In Single Out" HBox.hgrow="ALWAYS" />
       <Button maxWidth="Infinity" mnemonicParsing="false" text="Double in Double Out" HBox.hgrow="ALWAYS" />
    </HBox>
 
    <HBox GridPane.columnSpan="2" GridPane.rowIndex="5">
-      <Button fx:id="btn_opciones_atras" maxWidth="Infinity" mnemonicParsing="false" text="Atrás"
-              HBox.hgrow="ALWAYS" onAction="#handleButtonAction" />
-      <Button fx:id="btn_opciones_continuar" maxWidth="Infinity" mnemonicParsing="false" text="Continuar"
-              HBox.hgrow="ALWAYS" onAction="#handleButtonAction" />
+      <Button fx:id="btn_opciones_atras" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Atrás" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btn_opciones_continuar" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Continuar" HBox.hgrow="ALWAYS" />
    </HBox>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 
 </GridPane>
