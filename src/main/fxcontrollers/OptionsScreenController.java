@@ -18,7 +18,6 @@ public class OptionsScreenController extends BaseGuiController {
     private void handleButtonAction(ActionEvent event) throws Exception {
         Stage stage;
         Parent root;
-        System.out.println("HOLAAAAAAAAA opciones");
 
         if (event.getSource() == btn_opciones_atras) {
             stage = (Stage) btn_opciones_atras.getScene().getWindow();

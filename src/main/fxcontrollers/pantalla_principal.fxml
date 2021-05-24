@@ -9,12 +9,12 @@
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="main.fxcontrollers.MainScreenController">
 
-   <Button fx:id="btn_main_jugar" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Jugar" GridPane.halignment="CENTER">
+   <Button fx:id="btn_main_jugar" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_main_play" GridPane.halignment="CENTER">
       <font>
          <Font size="28.0" />
       </font>
    </Button>
-   <Button fx:id="btn_main_bt_manual" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Iniciar Bluetooth manualmente" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+   <Button fx:id="btn_main_bt_manual" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_main_usb" GridPane.halignment="CENTER" GridPane.rowIndex="1">
       <font>
          <Font size="14.0" />
       </font>

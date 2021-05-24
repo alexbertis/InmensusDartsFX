@@ -17,7 +17,6 @@ public class MainScreenController extends BaseGuiController {
     private void handleButtonAction(ActionEvent event) throws Exception {
         Stage stage;
         Parent root;
-        System.out.println("HOLAAAAAAAAA");
 
         if (event.getSource() == btn_main_jugar) {
             stage = (Stage) btn_main_jugar.getScene().getWindow();
