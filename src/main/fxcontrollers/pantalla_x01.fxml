@@ -4,19 +4,23 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.geometry.Insets?>
 <HBox alignment="center" spacing="10" style="-fx-min-width: 640; -fx-min-height: 360;
 -fx-background-image: url(/main/images/elegant_bg.png); -fx-background-size: cover;"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="main.fxcontrollers.MainScreenController">
 
    <VBox spacing="10">
-      <VBox>
+      <padding>
+         <Insets topRightBottomLeft="10"/>
+      </padding>
+      <VBox fx:id="x01RoundContainer" styleClass="x01-container">
          <ImageView fitHeight="40.0" preserveRatio="true">
             <Image backgroundLoading="true" url="@../images/img_ronda.png" />
          </ImageView>
          <Text text="Textoooo" />
       </VBox>
-      <VBox>
+      <VBox fx:id="x01ShotsContainer" styleClass="x01-container">
          <ImageView fitHeight="40.0" preserveRatio="true">
             <Image backgroundLoading="true" url="@../images/img_tirada.png" />
          </ImageView>

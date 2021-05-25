@@ -11,20 +11,20 @@ import javafx.stage.Stage;
 public class MainScreenController extends BaseGuiController {
 
     @FXML
-    private Button btn_main_bt_manual, btn_main_jugar;
+    private Button btnMainManualSetup, btnMainPlay;
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception {
         Stage stage;
         Parent root;
 
-        if (event.getSource() == btn_main_jugar) {
-            stage = (Stage) btn_main_jugar.getScene().getWindow();
+        if (event.getSource() == btnMainPlay) {
+            stage = (Stage) btnMainPlay.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
         } else {
             // bluetooth
-            stage = (Stage) btn_main_jugar.getScene().getWindow();
-            root = btn_main_bt_manual.getParent();
+            stage = (Stage) btnMainPlay.getScene().getWindow();
+            root = btnMainManualSetup.getParent();
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

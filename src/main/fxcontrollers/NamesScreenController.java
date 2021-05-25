@@ -6,12 +6,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class NamesScreenController extends BaseGuiController {
 
     @FXML
-    private Button btn_nombres_atras, btn_nombres_continuar;
+    private Button btnNamesBack, btnNamesNext;
+
+    @FXML
+    private TextField txtNames1, txtNames2, txtNames3, txtNames4, txtNames5, txtNames6, txtNames7, txtNames8;
+
+    private final TextField[] textFields =
+            new TextField[]{txtNames1, txtNames2, txtNames3, txtNames4, txtNames5, txtNames6, txtNames7, txtNames8};
 
 
     @FXML
@@ -19,14 +26,14 @@ public class NamesScreenController extends BaseGuiController {
         Stage stage;
         Parent root;
 
-        if (event.getSource() == btn_nombres_atras) {
-            stage = (Stage) btn_nombres_atras.getScene().getWindow();
+        if (event.getSource() == btnNamesBack) {
+            stage = (Stage) btnNamesBack.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
             stage.setScene(new Scene(root));
             stage.show();
-        } else if (event.getSource() == btn_nombres_continuar) {
+        } else if (event.getSource() == btnNamesNext) {
             // bluetooth
-            stage = (Stage) btn_nombres_continuar.getScene().getWindow();
+            stage = (Stage) btnNamesNext.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
             stage.setScene(new Scene(root));
             stage.show();

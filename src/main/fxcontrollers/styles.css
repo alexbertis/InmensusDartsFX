@@ -18,3 +18,21 @@
 .button-options *:selected {
     -fx-background-color: rgba(34, 184, 34, 0.67);
 }
+
+.x01-container {
+    -fx-background-color: #FFFA;
+    -fx-border-color: #F00;
+    -fx-border-width: 1;
+    -fx-padding: 6;
+}
+
+#x01RoundContainer {
+    -fx-border-radius: 10 0 0 0;
+    -fx-background-radius: 10 0 0 0;
+}
+
+
+#x01ShotsContainer {
+    -fx-border-radius: 10 0 0 0;
+    -fx-background-radius: 10 0 0 0;
+}

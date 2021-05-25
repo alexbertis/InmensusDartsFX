@@ -5,11 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import jssc.SerialPort;
 import jssc.SerialPortList;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import static main.utils.Constants.*;
 
 public class Main extends Application {
 
@@ -25,7 +26,8 @@ public class Main extends Application {
         // MainScreenController controller = loader.getController();
 
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root));
+        //primaryStage.setMaximized(true);
+        primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
     }
 

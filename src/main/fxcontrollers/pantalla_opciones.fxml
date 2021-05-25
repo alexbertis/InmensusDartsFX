@@ -61,8 +61,8 @@
    </HBox>
 
    <HBox GridPane.columnSpan="2" GridPane.rowIndex="5">
-      <Button fx:id="btn_opciones_atras" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Atrás" HBox.hgrow="ALWAYS" />
-      <Button fx:id="btn_opciones_continuar" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="Continuar" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnOptionsBack" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_back" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnOptionsNext" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_continue" HBox.hgrow="ALWAYS" />
    </HBox>
 
 </GridPane>

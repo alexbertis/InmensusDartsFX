@@ -12,6 +12,7 @@ public class Constants {
     public static final String X01_SINGLEINSINGLEOUT = "SISO";
     public static final String X01_DOUBLEINDOUBLEOUT = "DIDO";
 
-
+    public static final int WINDOW_WIDTH = 1280;
+    public static final int WINDOW_HEIGHT = 720;
 
 }

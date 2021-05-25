@@ -10,16 +10,16 @@
 
    <HBox maxWidth="Infinity" spacing="20.0" GridPane.hgrow="ALWAYS">
       <VBox maxWidth="Infinity" spacing="6" HBox.hgrow="ALWAYS">
-         <TextField promptText="%lbl.name1" />
-         <TextField promptText="Nombre 2" />
-         <TextField promptText="Nombre 3" />
-         <TextField promptText="Nombre 4" />
+         <TextField fx:id="txtNames1" promptText="%lbl.name1" />
+         <TextField fx:id="txtNames2" promptText="%lbl.name2" />
+         <TextField fx:id="txtNames3" promptText="%lbl.name3" />
+         <TextField fx:id="txtNames4" promptText="%lbl.name4" />
       </VBox>
       <VBox maxWidth="Infinity" spacing="6" HBox.hgrow="ALWAYS">
-         <TextField promptText="Nombre 5" />
-         <TextField promptText="Nombre 6" />
-         <TextField promptText="Nombre 7" />
-         <TextField promptText="Nombre 8" />
+         <TextField fx:id="txtNames5" promptText="%lbl.name5" />
+         <TextField fx:id="txtNames6" promptText="%lbl.name6" />
+         <TextField fx:id="txtNames7" promptText="%lbl.name7" />
+         <TextField fx:id="txtNames8" promptText="%lbl.name8" />
       </VBox>
       <padding>
          <Insets left="50.0" right="50.0" />
@@ -27,7 +27,7 @@
    </HBox>
 
    <HBox maxWidth="400" spacing="10">
-      <Button fx:id="btn_nombres_atras" maxWidth="Infinity" mnemonicParsing="false" text="Atrás" HBox.hgrow="ALWAYS" />
-      <Button fx:id="btn_nombres_continuar" maxWidth="Infinity" mnemonicParsing="false" text="Continuar" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnNamesBack" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_back" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnNamesNext" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_continue" HBox.hgrow="ALWAYS" />
    </HBox>
 </VBox>
