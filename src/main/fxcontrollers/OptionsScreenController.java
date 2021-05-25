@@ -35,9 +35,11 @@ public class OptionsScreenController extends BaseGuiController {
             stage = (Stage) btnOptionsNext.getScene().getWindow();
 
             gameInfo = new GameInfo(Integer.parseInt(
-                    getSelectedFromToggleGroup(numPlayersGroup)), getSelectedFromToggleGroup(gameGroup),
-                    Integer.parseInt(getSelectedFromToggleGroup(roundsGroup)), getSelectedFromToggleGroup(modeGroup),
-                    getSelectedFromToggleGroup(x01ModeGroup));
+                    getSelectedFromToggleGroup(numPlayersGroup, "1")),
+                    getSelectedFromToggleGroup(gameGroup, "X01"),
+                    Integer.parseInt(getSelectedFromToggleGroup(roundsGroup, "10")),
+                    getSelectedFromToggleGroup(modeGroup, "Single In Single Out"),
+                    getSelectedFromToggleGroup(x01ModeGroup, "301"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_nombres.fxml"), getStringsBundle());
             root = loader.load();
             loader.<NamesScreenController>getController().hideTextFields();

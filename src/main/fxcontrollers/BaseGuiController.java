@@ -26,8 +26,10 @@ public class BaseGuiController implements Initializable {
         this.stringsBundle = stringsBundle;
     }
 
-    protected String getSelectedFromToggleGroup(ToggleGroup toggleGroup){
-        return ((ToggleButton)toggleGroup.getSelectedToggle()).getText();
+    protected String getSelectedFromToggleGroup(ToggleGroup toggleGroup, String defaultValue){
+        if (toggleGroup == null) return defaultValue;
+        ToggleButton button = (ToggleButton)toggleGroup.getSelectedToggle();
+        return button != null ? button.getText() : defaultValue;
     }
 
     @Override

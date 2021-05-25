@@ -2,7 +2,8 @@
     -fx-background-color: #FFFA;
     -fx-max-width: infinity;
     -fx-padding: 10;
-    -fx-font-size: 16;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
 }
 
 .button-options, .button-options * {
@@ -13,10 +14,20 @@
 }
 .button-options * {
     -fx-background-color: transparent;
-    -fx-font-size: 16;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+.button-options *:focused {
+    -fx-border-color: red;
+    -fx-border-width: 4;
 }
 .button-options *:selected {
     -fx-background-color: rgba(34, 184, 34, 0.67);
+}
+
+HBox > VBox > TextField {
+    -fx-padding: 10;
+    -fx-font-size: 24;
 }
 
 .x01-container {
@@ -27,12 +38,17 @@
 }
 
 #x01RoundContainer {
-    -fx-border-radius: 10 0 0 0;
-    -fx-background-radius: 10 0 0 0;
+    -fx-border-radius: 30 0 0 0;
+    -fx-background-radius: 30 0 0 0;
 }
 
 
 #x01ShotsContainer {
-    -fx-border-radius: 10 0 0 0;
-    -fx-background-radius: 10 0 0 0;
+    -fx-border-radius: 0 0 0 30;
+    -fx-background-radius: 0 0 0 30;
+}
+
+#x01ShotsContainer > HBox > Text {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
 }

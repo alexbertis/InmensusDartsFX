@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="10" style="-fx-min-width: 640; -fx-min-height: 360;"
-      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@styles.css"
       fx:controller="main.fxcontrollers.NamesScreenController">
 
    <HBox maxWidth="Infinity" spacing="20.0" GridPane.hgrow="ALWAYS">

@@ -14,31 +14,31 @@
       <padding>
          <Insets topRightBottomLeft="10"/>
       </padding>
-      <VBox fx:id="x01RoundContainer" styleClass="x01-container">
-         <ImageView fitHeight="40.0" preserveRatio="true">
+      <VBox fx:id="x01RoundContainer" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="x01-container">
+         <ImageView fitHeight="80.0" preserveRatio="true">
             <Image backgroundLoading="true" url="@../images/img_ronda.png" />
          </ImageView>
          <Text text="Textoooo" />
       </VBox>
-      <VBox fx:id="x01ShotsContainer" styleClass="x01-container">
-         <ImageView fitHeight="40.0" preserveRatio="true">
+      <VBox fx:id="x01ShotsContainer" maxHeight="Infinity" VBox.vgrow="ALWAYS" styleClass="x01-container">
+         <ImageView fitHeight="80.0" preserveRatio="true">
             <Image backgroundLoading="true" url="@../images/img_tirada.png" />
          </ImageView>
          <Text text="Total: 000" />
-         <HBox>
-            <ImageView fitWidth="50.0" preserveRatio="true">
+         <HBox alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            <ImageView fitWidth="150.0" >
                <Image backgroundLoading="true" url="@../images/img_dardo.png" />
             </ImageView>
             <Text text="Punt1" />
          </HBox>
-         <HBox>
-            <ImageView fitWidth="50.0" preserveRatio="true">
+         <HBox alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            <ImageView fitWidth="150.0" >
                <Image backgroundLoading="true" url="@../images/img_dardo.png" />
             </ImageView>
             <Text text="Punt2" />
          </HBox>
-         <HBox>
-            <ImageView fitWidth="50.0" preserveRatio="true">
+         <HBox alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+            <ImageView fitWidth="150.0" >
                <Image backgroundLoading="true" url="@../images/img_dardo.png" />
             </ImageView>
             <Text text="Punt3" />
