@@ -1,6 +1,7 @@
 package main.fxcontrollers;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import main.beans.GameInfo;
+import static main.utils.Constants.*;
 
 public class OptionsScreenController extends BaseGuiController {
 
@@ -26,7 +29,7 @@ public class OptionsScreenController extends BaseGuiController {
         if (event.getSource() == btnOptionsBack) {
             stage = (Stage) btnOptionsBack.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_principal.fxml"), getStringsBundle());
-            stage.setScene(new Scene(root));
+            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             stage.show();
         } else if (event.getSource() == btnOptionsNext) {
             stage = (Stage) btnOptionsNext.getScene().getWindow();
@@ -37,7 +40,8 @@ public class OptionsScreenController extends BaseGuiController {
                     getSelectedFromToggleGroup(x01ModeGroup));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_nombres.fxml"), getStringsBundle());
             root = loader.load();
-            stage.setScene(new Scene(root));
+            loader.<NamesScreenController>getController().hideTextFields();
+            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             stage.show();
         } else {
 

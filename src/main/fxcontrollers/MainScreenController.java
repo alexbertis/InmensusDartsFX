@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+import static main.utils.Constants.*;
+
 public class MainScreenController extends BaseGuiController {
 
     @FXML
@@ -26,7 +28,7 @@ public class MainScreenController extends BaseGuiController {
             stage = (Stage) btnMainPlay.getScene().getWindow();
             root = btnMainManualSetup.getParent();
         }
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.show();
     }
