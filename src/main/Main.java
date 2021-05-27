@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jssc.SerialPortList;
+import main.fxcontrollers.MainScreenController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,7 +25,8 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxcontrollers/pantalla_principal.fxml"), resourceBundle);
         Parent root = loader.load();
         // Can access controller as a normal class
-        // MainScreenController controller = loader.getController();
+        MainScreenController controller = loader.getController();
+        controller.loadComboOptions();
 
         primaryStage.setTitle("InmensusDarts");
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/target.png")));

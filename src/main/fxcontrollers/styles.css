@@ -3,8 +3,9 @@
     -fx-font-size: 50;
     -fx-font-weight: bold;
 }
-#btnMainManualSetup {
+#btnMainManualSetup, #selectDeviceMain {
     -fx-font-size: 24;
+    -fx-min-width: 300;
 }
 
 .label-options {

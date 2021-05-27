@@ -9,6 +9,7 @@
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@styles.css"
           fx:controller="main.fxcontrollers.MainScreenController">
 
-   <Button fx:id="btnMainPlay" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_main_play" GridPane.halignment="CENTER"/>
-   <Button fx:id="btnMainManualSetup" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_main_usb" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+   <Button fx:id="btnMainPlay" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false"
+           onAction="#handleButtonAction" text="%btn_main_play" GridPane.halignment="CENTER"/>
+   <ComboBox fx:id="selectDeviceMain" GridPane.halignment="CENTER" GridPane.rowIndex="1" maxWidth="Infinity" />
 </GridPane>
