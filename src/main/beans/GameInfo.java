@@ -51,14 +51,15 @@ public class GameInfo {
         this.gameMode = gameMode;
     }
 
-    public boolean isSingleInSingleOutType(){
+    public boolean isSingleInSingleOutType() {
         return (null != gameType && gameType.equals(Constants.X01_SINGLEINSINGLEOUT));
     }
-    public boolean isDoubleInDoubleOutType(){
+
+    public boolean isDoubleInDoubleOutType() {
         return (null != gameType && gameType.equals(Constants.X01_DOUBLEINDOUBLEOUT));
     }
 
-    public GameInfo(int numPlayers, String game, int rounds, String gameType, String gameMode){
+    public GameInfo(int numPlayers, String game, int rounds, String gameType, String gameMode) {
         this.numPlayers = numPlayers;
         this.game = game;
         this.rounds = rounds;

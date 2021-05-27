@@ -60,7 +60,7 @@ public class NamesScreenController extends BaseGuiController {
         }
     }
 
-    public void hideTextFields(){
+    public void hideTextFields() {
         for (int i = 7; i >= gameInfo.getNumPlayers(); i--) {
             textFields[i].setVisible(false);
         }

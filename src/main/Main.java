@@ -12,12 +12,13 @@ import main.fxcontrollers.MainScreenController;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static main.utils.Constants.*;
+import static main.utils.Constants.WINDOW_HEIGHT;
+import static main.utils.Constants.WINDOW_WIDTH;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Locale.setDefault(new Locale("es"));
 
         ResourceBundle resourceBundle = ResourceBundle.getBundle("main/i18n/strings_gui");

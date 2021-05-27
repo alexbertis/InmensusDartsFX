@@ -1,7 +1,6 @@
 package main.fxcontrollers;
 
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import main.beans.GameInfo;
@@ -27,9 +26,9 @@ public class BaseGuiController implements Initializable {
         this.stringsBundle = stringsBundle;
     }
 
-    protected String getSelectedFromToggleGroup(ToggleGroup toggleGroup, String defaultValue){
+    protected String getSelectedFromToggleGroup(ToggleGroup toggleGroup, String defaultValue) {
         if (toggleGroup == null) return defaultValue;
-        ToggleButton button = (ToggleButton)toggleGroup.getSelectedToggle();
+        ToggleButton button = (ToggleButton) toggleGroup.getSelectedToggle();
         return button != null ? button.getText() : defaultValue;
     }
 

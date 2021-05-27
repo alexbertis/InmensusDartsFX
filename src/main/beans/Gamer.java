@@ -10,7 +10,7 @@ public class Gamer {
     private Text textViewPuntuacion;
     private VBox linearLayout;
 
-    public Gamer(String name, int puntuacion){
+    public Gamer(String name, int puntuacion) {
         this.name = name;
         this.puntuacion = puntuacion;
     }
@@ -31,8 +31,8 @@ public class Gamer {
         this.puntuacion = puntuacion;
     }
 
-    public Text getTextViewPuntuacion(){
-       return textViewPuntuacion;
+    public Text getTextViewPuntuacion() {
+        return textViewPuntuacion;
     }
 
     public void setTextViewPuntuacion(Text textViewPuntuacion) {

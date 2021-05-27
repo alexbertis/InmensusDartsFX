@@ -1,7 +1,6 @@
 package main.fxcontrollers;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,9 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import main.beans.GameInfo;
-import static main.utils.Constants.*;
+
+import static main.utils.Constants.WINDOW_HEIGHT;
+import static main.utils.Constants.WINDOW_WIDTH;
 
 public class OptionsScreenController extends BaseGuiController {
 

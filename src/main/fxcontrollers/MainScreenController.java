@@ -4,7 +4,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,13 +14,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jssc.SerialPortList;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import static main.utils.Constants.*;
+import static main.utils.Constants.WINDOW_HEIGHT;
+import static main.utils.Constants.WINDOW_WIDTH;
 
 public class MainScreenController extends BaseGuiController {
 
@@ -46,13 +40,13 @@ public class MainScreenController extends BaseGuiController {
         }
     }
 
-    public void loadComboOptions(){
+    public void loadComboOptions() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
             String previousPort = selectDeviceMain.getValue();
             System.out.println("Scanning ports again...");
             String[] ports = SerialPortList.getPortNames();
             selectDeviceMain.getItems().setAll(ports);
-            if (ports.length > 0){
+            if (ports.length > 0) {
                 if (previousPort == null || previousPort.isBlank()) {
                     selectDeviceMain.setValue(ports[0]);
                 } else {
