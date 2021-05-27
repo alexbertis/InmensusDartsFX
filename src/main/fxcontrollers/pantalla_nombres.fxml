@@ -27,7 +27,9 @@
    </HBox>
 
    <HBox maxWidth="400" spacing="10">
-      <Button fx:id="btnNamesBack" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_back" HBox.hgrow="ALWAYS" />
-      <Button fx:id="btnNamesNext" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleButtonAction" text="%btn_continue" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnNamesBack" styleClass="nav-bar-button" maxWidth="Infinity" mnemonicParsing="false"
+              onAction="#handleButtonAction" text="%btn_back" HBox.hgrow="ALWAYS" />
+      <Button fx:id="btnNamesNext" styleClass="nav-bar-button" maxWidth="Infinity" mnemonicParsing="false"
+              onAction="#handleButtonAction" text="%btn_continue" HBox.hgrow="ALWAYS" />
    </HBox>
 </VBox>

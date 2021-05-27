@@ -8,8 +8,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import main.beans.Gamer;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import static main.utils.Constants.WINDOW_HEIGHT;
@@ -39,7 +41,16 @@ public class NamesScreenController extends BaseGuiController {
         } else if (event.getSource() == btnNamesNext) {
             // bluetooth
             stage = (Stage) btnNamesNext.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
+            players = new ArrayList<>();
+            for (TextField nameField : textFields) {
+                // FIXME: dejar de confiar en el parseInt porque puede haber otro "modo" de 301
+                String name = nameField.getText();
+                if (nameField.isVisible())
+                    players.add(new Gamer(name, Integer.parseInt(gameInfo.getGameMode())));
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
+            root = loader.load();
+            loader.<X01ScreenController>getController().createLayoutGamers();
             stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             stage.show();
         } else {

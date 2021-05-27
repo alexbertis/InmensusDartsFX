@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jssc.SerialPortList;
 
@@ -25,7 +26,8 @@ public class Main extends Application {
         // Can access controller as a normal class
         // MainScreenController controller = loader.getController();
 
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("InmensusDarts");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/target.png")));
         //primaryStage.setMaximized(true);
         primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();

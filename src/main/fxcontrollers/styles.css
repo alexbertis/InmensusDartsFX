@@ -1,3 +1,12 @@
+
+#btnMainPlay {
+    -fx-font-size: 50;
+    -fx-font-weight: bold;
+}
+#btnMainManualSetup {
+    -fx-font-size: 24;
+}
+
 .label-options {
     -fx-background-color: #FFFA;
     -fx-max-width: infinity;
@@ -25,6 +34,11 @@
     -fx-background-color: rgba(34, 184, 34, 0.67);
 }
 
+.nav-bar-button {
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
 HBox > VBox > TextField {
     -fx-padding: 10;
     -fx-font-size: 24;
@@ -48,7 +62,11 @@ HBox > VBox > TextField {
     -fx-background-radius: 0 0 0 30;
 }
 
-#x01ShotsContainer > HBox > Text {
+#x01ShotsContainer > Text, #x01ShotsContainer > HBox > Text {
     -fx-font-size: 30;
     -fx-font-weight: bold;
+}
+
+.gamer-name {
+    -fx-padding: 10 0;
 }
