@@ -16,6 +16,7 @@ public class BaseGuiController implements Initializable {
     private ResourceBundle stringsBundle;
     protected static GameInfo gameInfo;
     protected static List<Gamer> players;
+    protected static String selectedDeviceName = "";
 
 
     protected ResourceBundle getStringsBundle() {

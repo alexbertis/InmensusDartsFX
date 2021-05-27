@@ -50,7 +50,9 @@ public class NamesScreenController extends BaseGuiController {
             }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
             root = loader.load();
-            loader.<X01ScreenController>getController().createLayoutGamers();
+            X01ScreenController x01ScreenController = loader.getController();
+            x01ScreenController.createLayoutGamers();
+            x01ScreenController.initGame(selectedDeviceName);
             stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
             stage.show();
         } else {
