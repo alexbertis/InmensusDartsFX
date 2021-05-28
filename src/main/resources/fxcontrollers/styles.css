@@ -57,6 +57,9 @@ HBox > VBox > TextField {
     -fx-background-radius: 30 0 0 0;
 }
 
+#txtRoundNumber {
+    -fx-font-size: 30;
+}
 
 #x01ShotsContainer {
     -fx-border-radius: 0 0 0 30;
