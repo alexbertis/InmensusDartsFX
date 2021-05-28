@@ -449,7 +449,7 @@ public class X01ScreenController extends BaseGuiController {
             Media media = new Media(getClass().getResource(filename).toURI().toString());
             MediaPlayer player = new MediaPlayer(media);
             player.play();
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException | NullPointerException e) {
             e.printStackTrace();
         }
     }
