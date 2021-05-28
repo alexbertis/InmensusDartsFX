@@ -7,15 +7,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import jssc.SerialPortList;
-
-import static utils.Constants.WINDOW_HEIGHT;
-import static utils.Constants.WINDOW_WIDTH;
 
 public class MainScreenController extends BaseGuiController {
 
@@ -32,9 +28,7 @@ public class MainScreenController extends BaseGuiController {
         if (event.getSource() == btnMainPlay) {
             Stage stage = (Stage) btnMainPlay.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
-            Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-            stage.setScene(scene);
-            stage.show();
+            stage.getScene().setRoot(root);
             if (timeline != null)
                 timeline.stop();
         }

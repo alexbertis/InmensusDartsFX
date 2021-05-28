@@ -113,8 +113,6 @@ public class X01ScreenController extends BaseGuiController {
 
     public void createLayoutGamers() {
         boolean addEmptyLayout = players.size() > 2 && players.size() % 2 != 0;
-        System.out.printf("Initializing layout for %d players. second row with spaces? %b\n", players.size(), addEmptyLayout);
-
 
         if (players.size() > 2) {
             RowConstraints rowConstraints = new RowConstraints();
@@ -144,7 +142,6 @@ public class X01ScreenController extends BaseGuiController {
         for (int i = 0; i < players.size(); i++) {
             Gamer gamer = players.get(i);
             int colNumber = 2 * (i % corte);
-            System.out.printf("player %d column %d", i, colNumber);
             if (players.size() <= 2 || i < corte) {
                 appendGamerLinearLayout(gamer, fontSizeName, fontSizePoints, padreJugadores, 0, colNumber);
             } else {
@@ -338,9 +335,7 @@ public class X01ScreenController extends BaseGuiController {
                     try {
                         Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
                         Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
-                        Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-                        stage.setScene(scene);
-                        stage.show();
+                        stage.getScene().setRoot(root);
                     } catch (IOException e) {
                         e.printStackTrace();
                         Platform.exit();

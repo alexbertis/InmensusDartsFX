@@ -35,8 +35,8 @@ public class Main extends Application {
 
         primaryStage.setTitle("InmensusDarts");
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("images/target.png")));
-        //primaryStage.setMaximized(true);
-        primaryStage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
+        primaryStage.setFullScreen(true);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

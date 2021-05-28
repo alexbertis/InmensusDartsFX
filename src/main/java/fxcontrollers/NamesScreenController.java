@@ -38,8 +38,7 @@ public class NamesScreenController extends BaseGuiController {
         if (event.getSource() == btnNamesBack) {
             stage = (Stage) btnNamesBack.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
-            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-            stage.show();
+            stage.getScene().setRoot(root);
         } else if (event.getSource() == btnNamesNext) {
             // bluetooth
             stage = (Stage) btnNamesNext.getScene().getWindow();
@@ -68,8 +67,7 @@ public class NamesScreenController extends BaseGuiController {
                 X01ScreenController x01ScreenController = loader.getController();
                 x01ScreenController.createLayoutGamers();
                 x01ScreenController.initGame(selectedDeviceName);
-                stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-                stage.show();
+                stage.getScene().setRoot(root);
             }
         } else {
 

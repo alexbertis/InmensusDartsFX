@@ -30,8 +30,7 @@ public class OptionsScreenController extends BaseGuiController {
         if (event.getSource() == btnOptionsBack) {
             stage = (Stage) btnOptionsBack.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_principal.fxml"), getStringsBundle());
-            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-            stage.show();
+            stage.getScene().setRoot(root);
         } else if (event.getSource() == btnOptionsNext) {
             stage = (Stage) btnOptionsNext.getScene().getWindow();
 
@@ -44,8 +43,7 @@ public class OptionsScreenController extends BaseGuiController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_nombres.fxml"), getStringsBundle());
             root = loader.load();
             loader.<NamesScreenController>getController().hideTextFields();
-            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-            stage.show();
+            stage.getScene().setRoot(root);
         } else {
 
         }

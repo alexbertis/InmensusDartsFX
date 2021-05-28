@@ -1,3 +1,6 @@
+.root {
+    -fx-min-width: 1280; -fx-min-height: 720;
+}
 
 #btnMainPlay {
     -fx-font-size: 50;
