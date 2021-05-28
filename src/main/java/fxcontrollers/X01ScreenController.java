@@ -15,6 +15,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
 import beans.DatosTirada;
 import beans.Gamer;
 import beans.WaitInfo;
@@ -23,6 +26,7 @@ import purejavacomm.SerialPort;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.*;
 
 import static utils.Constants.WINDOW_HEIGHT;
@@ -70,7 +74,6 @@ public class X01ScreenController extends BaseGuiController {
             }
         }, 0, 200);
     }
-
 
     public void initGame(String usbDeviceName) {
         try {
@@ -220,15 +223,19 @@ public class X01ScreenController extends BaseGuiController {
 
 
     private void tirada(String nuevosPuntos) {
+        if (nuevosPuntos.contains("NeoDardos") || nuevosPuntos.isBlank()) {
+            return;
+        }
+
         int puntosParaRestar = 0;
         DatosTirada datosTirada = codigoAPuntos(nuevosPuntos);
         if (datosTirada.getPuntos() == 0) {
-            //dardoNulo.start();
+            playMp3("music/dardo_nulo.mp3");
         }
         if (datosTirada.isTriple()) {
-            //dardoTriple.start();
+            playMp3("music/dardo_triple.mp3");
         } else {
-            //dardoSimple.start();
+            playMp3("music/dardo_simple.mp3");
         }
         puntosParaRestar = datosTirada.getPuntos();
 
@@ -445,6 +452,16 @@ public class X01ScreenController extends BaseGuiController {
 
     private void setActivePlayer(VBox box) {
         box.setBackground(new Background(new BackgroundFill(Paint.valueOf("#00FF00AA"), new CornerRadii(20), Insets.EMPTY)));
+    }
+
+    private void playMp3(String filename) {
+        try {
+            Media media = new Media(getClass().getResource(filename).toURI().toString());
+            MediaPlayer player = new MediaPlayer(media);
+            player.play();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
 }
