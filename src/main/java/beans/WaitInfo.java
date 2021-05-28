@@ -1,4 +1,4 @@
-package main.beans;
+package beans;
 
 public class WaitInfo {
     private boolean waiting = false;

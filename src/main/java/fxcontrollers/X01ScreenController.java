@@ -1,4 +1,4 @@
-package main.fxcontrollers;
+package fxcontrollers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -15,9 +15,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import main.beans.DatosTirada;
-import main.beans.Gamer;
-import main.beans.WaitInfo;
+import beans.DatosTirada;
+import beans.Gamer;
+import beans.WaitInfo;
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.SerialPort;
 
@@ -25,8 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-import static main.utils.Constants.WINDOW_HEIGHT;
-import static main.utils.Constants.WINDOW_WIDTH;
+import static utils.Constants.WINDOW_HEIGHT;
+import static utils.Constants.WINDOW_WIDTH;
 
 public class X01ScreenController extends BaseGuiController {
 

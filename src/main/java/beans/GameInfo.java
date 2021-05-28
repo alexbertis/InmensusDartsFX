@@ -1,7 +1,7 @@
-package main.beans;
+package beans;
 
 
-import main.utils.Constants;
+import utils.Constants;
 
 public class GameInfo {
 

@@ -1,10 +1,10 @@
-package main.fxcontrollers;
+package fxcontrollers;
 
+import beans.GameInfo;
+import beans.Gamer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import main.beans.GameInfo;
-import main.beans.Gamer;
 
 import java.net.URL;
 import java.util.List;

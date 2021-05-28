@@ -1,4 +1,4 @@
-package main.fxcontrollers;
+package fxcontrollers;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -14,8 +14,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jssc.SerialPortList;
 
-import static main.utils.Constants.WINDOW_HEIGHT;
-import static main.utils.Constants.WINDOW_WIDTH;
+import static utils.Constants.WINDOW_HEIGHT;
+import static utils.Constants.WINDOW_WIDTH;
 
 public class MainScreenController extends BaseGuiController {
 

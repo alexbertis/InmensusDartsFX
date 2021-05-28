@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.GridPane?>
 <GridPane alignment="center" hgap="10" style="-fx-min-width: 640; -fx-min-height: 360;
--fx-background-image: url(/main/images/elegant_bg.png); -fx-background-size: cover" vgap="10"
+-fx-background-image: url(/images/elegant_bg.png); -fx-background-size: cover" vgap="10"
           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@styles.css"
-          fx:controller="main.fxcontrollers.MainScreenController">
+          fx:controller="fxcontrollers.MainScreenController">
 
    <Button fx:id="btnMainPlay" alignment="CENTER" maxWidth="Infinity" mnemonicParsing="false"
            onAction="#handleButtonAction" text="%btn_main_play" GridPane.halignment="CENTER"/>

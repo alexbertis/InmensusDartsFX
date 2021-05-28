@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<HBox alignment="center" spacing="10" style="-fx-min-width: 640; -fx-min-height: 360; -fx-background-image: url(/main/images/elegant_bg.png); -fx-background-size: cover;" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.fxcontrollers.X01ScreenController">
+<HBox alignment="center" spacing="10" style="-fx-min-width: 640; -fx-min-height: 360;
+-fx-background-image: url(/images/elegant_bg.png); -fx-background-size: cover;"
+      stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxcontrollers.X01ScreenController">
 
    <VBox spacing="10">
       <padding>
@@ -13,30 +15,30 @@
       </padding>
       <VBox maxHeight="Infinity" styleClass="x01-container" VBox.vgrow="ALWAYS" fx:id="x01RoundContainer">
          <ImageView fitHeight="80.0" preserveRatio="true">
-            <Image backgroundLoading="true" url="@../images/img_ronda.png" />
+            <Image backgroundLoading="true" url="@/images/img_ronda.png" />
          </ImageView>
          <Text fx:id="txtRoundNumber" text="Textoooo" />
       </VBox>
       <VBox maxHeight="Infinity" styleClass="x01-container" VBox.vgrow="ALWAYS" fx:id="x01ShotsContainer">
          <ImageView fitHeight="80.0" preserveRatio="true">
-            <Image backgroundLoading="true" url="@../images/img_tirada.png" />
+            <Image backgroundLoading="true" url="@/images/img_tirada.png" />
          </ImageView>
          <Text fx:id="txtShotTotal" text="Total: 000" />
          <HBox fx:id="contShot1" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
             <ImageView fitWidth="150.0" preserveRatio="true">
-               <Image backgroundLoading="true" url="@../images/dart.png" />
+               <Image backgroundLoading="true" url="@/images/dart.png" />
             </ImageView>
             <Text fx:id="txtShot1" text="Punt1" />
          </HBox>
          <HBox fx:id="contShot2" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
             <ImageView fitWidth="150.0" preserveRatio="true">
-               <Image backgroundLoading="true" url="@../images/dart.png" />
+               <Image backgroundLoading="true" url="@/images/dart.png" />
             </ImageView>
             <Text fx:id="txtShot2" text="Punt2" />
          </HBox>
          <HBox fx:id="contShot3" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
             <ImageView fitWidth="150.0" preserveRatio="true">
-               <Image backgroundLoading="true" url="@../images/dart.png" />
+               <Image backgroundLoading="true" url="@/images/dart.png" />
             </ImageView>
             <Text fx:id="txtShot3" text="Punt3" />
          </HBox>

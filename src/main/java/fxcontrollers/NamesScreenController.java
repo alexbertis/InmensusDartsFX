@@ -1,5 +1,6 @@
-package main.fxcontrollers;
+package fxcontrollers;
 
+import beans.Gamer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,14 +10,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import main.beans.Gamer;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import static main.utils.Constants.WINDOW_HEIGHT;
-import static main.utils.Constants.WINDOW_WIDTH;
+import static utils.Constants.WINDOW_HEIGHT;
+import static utils.Constants.WINDOW_WIDTH;
+
 
 public class NamesScreenController extends BaseGuiController {
 

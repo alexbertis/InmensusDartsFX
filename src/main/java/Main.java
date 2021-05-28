@@ -1,22 +1,18 @@
-package main;
-
+import fxcontrollers.MainScreenController;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import jssc.SerialPortList;
-import main.fxcontrollers.MainScreenController;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static main.utils.Constants.WINDOW_HEIGHT;
-import static main.utils.Constants.WINDOW_WIDTH;
+import static utils.Constants.WINDOW_HEIGHT;
+import static utils.Constants.WINDOW_WIDTH;
 
 public class Main extends Application {
 
@@ -24,7 +20,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Locale.setDefault(new Locale("es"));
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("main/i18n/strings_gui");
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("i18n/strings_gui");
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("fxcontrollers/pantalla_principal.fxml"), resourceBundle);
         Parent root = loader.load();

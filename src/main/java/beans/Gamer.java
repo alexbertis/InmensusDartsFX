@@ -1,4 +1,4 @@
-package main.beans;
+package beans;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
