@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -42,19 +43,33 @@ public class NamesScreenController extends BaseGuiController {
             // bluetooth
             stage = (Stage) btnNamesNext.getScene().getWindow();
             players = new ArrayList<>();
+            boolean emptyField = false;
             for (TextField nameField : textFields) {
                 // FIXME: dejar de confiar en el parseInt porque puede haber otro "modo" de 301
                 String name = nameField.getText();
-                if (nameField.isVisible())
+                if (nameField.isVisible()){
+                    if (name.isBlank()) {
+                        emptyField = true;
+                        break;
+                    }
                     players.add(new Gamer(name, Integer.parseInt(gameInfo.getGameMode())));
+                }
             }
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
-            root = loader.load();
-            X01ScreenController x01ScreenController = loader.getController();
-            x01ScreenController.createLayoutGamers();
-            x01ScreenController.initGame(selectedDeviceName);
-            stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
-            stage.show();
+            if (emptyField) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Rellenar nombres");
+                alert.setHeaderText("Campos para nombres no rellenados");
+                alert.setContentText("Rellena todos los nombres para poder continuar al juego");
+                alert.show();
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_x01.fxml"), getStringsBundle());
+                root = loader.load();
+                X01ScreenController x01ScreenController = loader.getController();
+                x01ScreenController.createLayoutGamers();
+                x01ScreenController.initGame(selectedDeviceName);
+                stage.setScene(new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT));
+                stage.show();
+            }
         } else {
 
         }
