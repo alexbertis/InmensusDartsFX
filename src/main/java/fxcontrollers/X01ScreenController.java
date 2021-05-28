@@ -25,6 +25,7 @@ import purejavacomm.SerialPort;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 
 public class X01ScreenController extends BaseGuiController {
@@ -446,9 +447,12 @@ public class X01ScreenController extends BaseGuiController {
 
     private void playMp3(String filename) {
         try {
-            Media media = new Media(getClass().getResource(filename).toURI().toString());
-            MediaPlayer player = new MediaPlayer(media);
-            player.play();
+            URL resource = getClass().getResource(filename);
+            if (null != resource) {
+                Media media = new Media(resource.toURI().toString());
+                MediaPlayer player = new MediaPlayer(media);
+                player.play();
+            }
         } catch (URISyntaxException | NullPointerException e) {
             e.printStackTrace();
         }
