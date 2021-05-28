@@ -11,9 +11,6 @@ import jssc.SerialPortList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import static utils.Constants.WINDOW_HEIGHT;
-import static utils.Constants.WINDOW_WIDTH;
-
 public class Main extends Application {
 
     @Override

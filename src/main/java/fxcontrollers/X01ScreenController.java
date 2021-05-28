@@ -1,26 +1,24 @@
 package fxcontrollers;
 
+import beans.DatosTirada;
+import beans.Gamer;
+import beans.WaitInfo;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import beans.DatosTirada;
-import beans.Gamer;
-import beans.WaitInfo;
 import purejavacomm.CommPortIdentifier;
 import purejavacomm.SerialPort;
 
@@ -28,9 +26,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.*;
-
-import static utils.Constants.WINDOW_HEIGHT;
-import static utils.Constants.WINDOW_WIDTH;
 
 public class X01ScreenController extends BaseGuiController {
 

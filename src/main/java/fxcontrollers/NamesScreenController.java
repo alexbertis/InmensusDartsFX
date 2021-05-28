@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,9 +13,6 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import static utils.Constants.WINDOW_HEIGHT;
-import static utils.Constants.WINDOW_WIDTH;
 
 
 public class NamesScreenController extends BaseGuiController {
@@ -47,7 +43,7 @@ public class NamesScreenController extends BaseGuiController {
             for (TextField nameField : textFields) {
                 // FIXME: dejar de confiar en el parseInt porque puede haber otro "modo" de 301
                 String name = nameField.getText();
-                if (nameField.isVisible()){
+                if (nameField.isVisible()) {
                     if (name.isBlank()) {
                         emptyField = true;
                         break;

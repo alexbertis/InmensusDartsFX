@@ -1,17 +1,13 @@
 package fxcontrollers;
 
+import beans.GameInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import beans.GameInfo;
-
-import static utils.Constants.WINDOW_HEIGHT;
-import static utils.Constants.WINDOW_WIDTH;
 
 
 public class OptionsScreenController extends BaseGuiController {
