@@ -4,13 +4,17 @@ import beans.DatosTirada;
 import beans.Gamer;
 import beans.WaitInfo;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -96,6 +100,13 @@ public class X01ScreenController extends BaseGuiController {
 
         waitInfo.setWaiting(false);
 
+    }
+
+    public void escucharNulo(Scene scene) {
+        if (scene != null)
+            scene.setOnKeyPressed(keyEvent -> {
+                if (keyEvent.getCode().equals(KeyCode.SPACE) && !waitInfo.isWaiting()) tirada("0");
+            });
     }
 
     private void clearTirada() {
@@ -223,12 +234,12 @@ public class X01ScreenController extends BaseGuiController {
         int puntosParaRestar = 0;
         DatosTirada datosTirada = codigoAPuntos(nuevosPuntos);
         if (datosTirada.getPuntos() == 0) {
-            playMp3("music/dardo_nulo.mp3");
+            playMp3("/music/dardo_nulo.mp3");
         }
         if (datosTirada.isTriple()) {
-            playMp3("music/dardo_triple.mp3");
+            playMp3("/music/dardo_triple.mp3");
         } else {
-            playMp3("music/dardo_simple.mp3");
+            playMp3("/music/dardo_simple.mp3");
         }
         puntosParaRestar = datosTirada.getPuntos();
 
@@ -356,7 +367,7 @@ public class X01ScreenController extends BaseGuiController {
             datosTirada = actualizaTirada(25, "1", "Diana");
         } else if (nuevosPuntos.equals("Cint")) {
             datosTirada = actualizaTirada(50, "2", "Diana");
-        } else if (nuevosPuntos.trim().equals("")) {
+        } else if (nuevosPuntos.isBlank() || nuevosPuntos.trim().equals("0")) {
             datosTirada = actualizaTirada(0, (String) null);
         } else {
             lados = nuevosPuntos.split("x");

@@ -63,6 +63,7 @@ public class NamesScreenController extends BaseGuiController {
                 X01ScreenController x01ScreenController = loader.getController();
                 x01ScreenController.createLayoutGamers();
                 x01ScreenController.initGame(selectedDeviceName);
+                x01ScreenController.escucharNulo(stage.getScene());
                 stage.getScene().setRoot(root);
             }
         } else {
