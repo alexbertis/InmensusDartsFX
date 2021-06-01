@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-image: url(/images/elegant_bg.png);
--fx-background-size: cover" onKeyReleased="#handleKeyEvent" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
+-fx-background-size: cover" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxcontrollers.OptionsScreenController">
 
    <Label styleClass="label-options" text="N. de jugadores" />

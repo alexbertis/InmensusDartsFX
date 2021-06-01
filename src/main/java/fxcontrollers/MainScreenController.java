@@ -27,8 +27,10 @@ public class MainScreenController extends BaseGuiController {
     private void handleButtonAction(ActionEvent event) throws Exception {
         if (event.getSource() == btnMainPlay) {
             Stage stage = (Stage) btnMainPlay.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+            Parent root = loader.load();
             stage.getScene().setRoot(root);
+            loader.<OptionsScreenController>getController().initOptions();
             if (timeline != null)
                 timeline.stop();
         }

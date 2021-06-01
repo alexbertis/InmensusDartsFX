@@ -33,8 +33,10 @@ public class NamesScreenController extends BaseGuiController {
 
         if (event.getSource() == btnNamesBack) {
             stage = (Stage) btnNamesBack.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+            root = loader.load();
             stage.getScene().setRoot(root);
+            loader.<OptionsScreenController>getController().initOptions();
         } else if (event.getSource() == btnNamesNext) {
             // bluetooth
             stage = (Stage) btnNamesNext.getScene().getWindow();

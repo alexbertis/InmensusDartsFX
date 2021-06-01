@@ -4,7 +4,6 @@ import beans.GameInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,52 +22,72 @@ public class OptionsScreenController extends BaseGuiController {
     @FXML
     private ToggleGroup numPlayersGroup, gameGroup, x01ModeGroup, roundsGroup, modeGroup;
 
-    @FXML
-    private void handleKeyEvent(KeyEvent event) {
-        KeyCode code = event.getCode();
-        System.out.println(code);
-        Scene scene = btnOptionsBack.getScene();
-        Parent focusedParent = scene.getFocusOwner().getParent();
-        if (scene.getFocusOwner().equals(btnOptionsBack) || scene.getFocusOwner().equals(btnOptionsNext))
-            return;
-        if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.ENTER)){
-            switch (focusedParent.getId()){
-                case "numPlayersBox":
-                    ((ToggleButton)gameGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "gameBox":
-                    ((ToggleButton)x01ModeGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "x01ModeBox":
-                    ((ToggleButton)roundsGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "roundsBox":
-                    ((ToggleButton)modeGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "modeBox":
-                    btnOptionsNext.requestFocus();
-                    break;
-            }
-        } else if (code.equals(KeyCode.UP)){
-            switch (focusedParent.getId()){
-                case "numPlayersBox":
-                    btnOptionsBack.requestFocus();
-                    break;
-                case "gameBox":
+
+    public void initOptions() {
+        btnOptionsBack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            KeyCode code = event.getCode();
+            System.out.println(code);
+            Scene scene = btnOptionsBack.getScene();
+            Parent focusedParent = scene.getFocusOwner().getParent();
+            if (scene.getFocusOwner().equals(btnOptionsBack)) {
+                if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.ENTER)) {
                     ((ToggleButton)numPlayersGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "x01ModeBox":
-                    ((ToggleButton)gameGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "roundsBox":
-                    ((ToggleButton)x01ModeGroup.getToggles().get(0)).requestFocus();
-                    break;
-                case "modeBox":
-                    ((ToggleButton)roundsGroup.getToggles().get(0)).requestFocus();
-                    break;
+                } else if (code.equals(KeyCode.UP)) {
+                    btnOptionsNext.requestFocus();
+                    event.consume();
+                }
+                return;
+            } else if (scene.getFocusOwner().equals(btnOptionsNext)) {
+                if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.ENTER)) {
+                    btnOptionsBack.requestFocus();
+                    event.consume();
+                } else if (code.equals(KeyCode.UP)) {
+                    ((ToggleButton)modeGroup.getToggles().get(0)).requestFocus();
+                }
+                return;
             }
-        }
+            if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.ENTER)){
+                switch (focusedParent.getId()){
+                    case "numPlayersBox":
+                        ((ToggleButton)gameGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "gameBox":
+                        ((ToggleButton)x01ModeGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "x01ModeBox":
+                        ((ToggleButton)roundsGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "roundsBox":
+                        ((ToggleButton)modeGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "modeBox":
+                        btnOptionsNext.requestFocus();
+                        break;
+                }
+                event.consume();
+            } else if (code.equals(KeyCode.UP)){
+                switch (focusedParent.getId()){
+                    case "numPlayersBox":
+                        btnOptionsBack.requestFocus();
+                        break;
+                    case "gameBox":
+                        ((ToggleButton)numPlayersGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "x01ModeBox":
+                        ((ToggleButton)gameGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "roundsBox":
+                        ((ToggleButton)x01ModeGroup.getToggles().get(0)).requestFocus();
+                        break;
+                    case "modeBox":
+                        ((ToggleButton)roundsGroup.getToggles().get(0)).requestFocus();
+                        break;
+                }
+                event.consume();
+            }
+        });
     }
+
 
     @FXML
     private void handleButtonAction(ActionEvent event) throws Exception {
