@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-image: url(/images/elegant_bg.png);
--fx-background-size: cover" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
+-fx-background-size: cover" onKeyReleased="#handleKeyEvent" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxcontrollers.OptionsScreenController">
 
    <Label styleClass="label-options" text="N. de jugadores" />
-   <HBox styleClass="button-options" GridPane.columnIndex="1">
+   <HBox styleClass="button-options" fx:id="numPlayersBox" GridPane.columnIndex="1">
       <fx:define>
          <ToggleGroup fx:id="numPlayersGroup" />
       </fx:define>
@@ -22,7 +22,7 @@
    </HBox>
 
    <Label styleClass="label-options" text="Juego" GridPane.rowIndex="1" />
-   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="1">
+   <HBox styleClass="button-options" fx:id="gameBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
       <fx:define>
          <ToggleGroup fx:id="gameGroup" />
       </fx:define>
@@ -31,7 +31,7 @@
    </HBox>
 
    <Label styleClass="label-options" text="Modo X01" GridPane.rowIndex="2" />
-   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="2">
+   <HBox styleClass="button-options" fx:id="x01ModeBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
       <fx:define>
          <ToggleGroup fx:id="x01ModeGroup" />
       </fx:define>
@@ -41,7 +41,7 @@
    </HBox>
 
    <Label styleClass="label-options" text="Rondas" GridPane.rowIndex="3" />
-   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="3">
+   <HBox styleClass="button-options" fx:id="roundsBox" GridPane.columnIndex="1" GridPane.rowIndex="3">
       <fx:define>
          <ToggleGroup fx:id="roundsGroup" />
       </fx:define>
@@ -50,7 +50,7 @@
    </HBox>
 
    <Label styleClass="label-options" text="Modo" GridPane.rowIndex="4" />
-   <HBox styleClass="button-options" GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <HBox styleClass="button-options" fx:id="modeBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
       <fx:define>
          <ToggleGroup fx:id="modeGroup" />
       </fx:define>
