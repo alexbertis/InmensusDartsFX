@@ -7,12 +7,12 @@
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxcontrollers.OptionsScreenController">
 
    <Label styleClass="label-options" text="N. de jugadores" />
-   <HBox styleClass="button-options" fx:id="numPlayersBox" GridPane.columnIndex="1">
+   <HBox styleClass="button-options" fx:id="numPlayersBox" GridPane.columnIndex="1" >
       <fx:define>
          <ToggleGroup fx:id="numPlayersGroup" />
       </fx:define>
       <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="1" HBox.hgrow="ALWAYS" />
-      <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="2" HBox.hgrow="ALWAYS" />
+      <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="2" HBox.hgrow="ALWAYS" selected="true"/>
       <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="3" HBox.hgrow="ALWAYS" />
       <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="4" HBox.hgrow="ALWAYS" />
       <ToggleButton toggleGroup="$numPlayersGroup" maxWidth="Infinity" mnemonicParsing="false" text="5" HBox.hgrow="ALWAYS" />
@@ -26,8 +26,8 @@
       <fx:define>
          <ToggleGroup fx:id="gameGroup" />
       </fx:define>
-      <ToggleButton toggleGroup="$gameGroup" maxWidth="Infinity" mnemonicParsing="false" text="X01" HBox.hgrow="ALWAYS" />
-      <ToggleButton toggleGroup="$gameGroup" maxWidth="Infinity" mnemonicParsing="false" text="Cricket" HBox.hgrow="ALWAYS" />
+      <ToggleButton toggleGroup="$gameGroup" maxWidth="Infinity" mnemonicParsing="false" text="X01" HBox.hgrow="ALWAYS" selected="true" fx:id="X01Button"/>
+      <ToggleButton toggleGroup="$gameGroup" maxWidth="Infinity" mnemonicParsing="false" text="Cricket" HBox.hgrow="ALWAYS" fx:id="CricketButton"/>
    </HBox>
 
    <Label styleClass="label-options" text="Modo X01" GridPane.rowIndex="2" />
@@ -36,29 +36,29 @@
          <ToggleGroup fx:id="x01ModeGroup" />
       </fx:define>
       <ToggleButton toggleGroup="$x01ModeGroup" maxWidth="Infinity" mnemonicParsing="false" text="301" HBox.hgrow="ALWAYS" />
-      <ToggleButton toggleGroup="$x01ModeGroup" maxWidth="Infinity" mnemonicParsing="false" text="501" HBox.hgrow="ALWAYS" />
+      <ToggleButton toggleGroup="$x01ModeGroup" maxWidth="Infinity" mnemonicParsing="false" text="501" HBox.hgrow="ALWAYS"  selected="true"/>
       <ToggleButton toggleGroup="$x01ModeGroup" maxWidth="Infinity" mnemonicParsing="false" text="701" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label styleClass="label-options" text="Rondas" GridPane.rowIndex="3" />
-   <HBox styleClass="button-options" fx:id="roundsBox" GridPane.columnIndex="1" GridPane.rowIndex="3">
-      <fx:define>
-         <ToggleGroup fx:id="roundsGroup" />
-      </fx:define>
-      <ToggleButton toggleGroup="$roundsGroup" maxWidth="Infinity" mnemonicParsing="false" text="10" HBox.hgrow="ALWAYS" />
-      <ToggleButton toggleGroup="$roundsGroup" maxWidth="Infinity" mnemonicParsing="false" text="20" HBox.hgrow="ALWAYS" />
-   </HBox>
-
-   <Label styleClass="label-options" text="Modo" GridPane.rowIndex="4" />
-   <HBox styleClass="button-options" fx:id="modeBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <Label styleClass="label-options" text="Modo" GridPane.rowIndex="3" />
+   <HBox styleClass="button-options" fx:id="modeBox" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true">
       <fx:define>
          <ToggleGroup fx:id="modeGroup" />
       </fx:define>
-      <ToggleButton toggleGroup="$modeGroup" maxWidth="Infinity" mnemonicParsing="false" text="Single In Single Out" HBox.hgrow="ALWAYS" />
+      <ToggleButton toggleGroup="$modeGroup" maxWidth="Infinity" mnemonicParsing="false" text="Single In Single Out" HBox.hgrow="ALWAYS"  selected="true"/>
       <ToggleButton toggleGroup="$modeGroup" maxWidth="Infinity" mnemonicParsing="false" text="Double in Double Out" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <HBox GridPane.columnSpan="2" GridPane.rowIndex="5" spacing="10">
+   <Label styleClass="label-options" text="Rondas" GridPane.rowIndex="4" />
+   <HBox styleClass="button-options" fx:id="roundsBox" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <fx:define>
+         <ToggleGroup fx:id="roundsGroup" />
+      </fx:define>
+      <ToggleButton toggleGroup="$roundsGroup" maxWidth="Infinity" mnemonicParsing="false" text="10" HBox.hgrow="ALWAYS"  selected="true"/>
+      <ToggleButton toggleGroup="$roundsGroup" maxWidth="Infinity" mnemonicParsing="false" text="20" HBox.hgrow="ALWAYS" />
+   </HBox>
+
+   <HBox GridPane.columnSpan="2"  GridPane.rowIndex="5" spacing="10" fx:id="buttonsBox">
       <Button fx:id="btnOptionsBack" styleClass="nav-bar-button" maxWidth="Infinity" mnemonicParsing="false"
               onAction="#handleButtonAction" text="%btn_back" HBox.hgrow="ALWAYS" />
       <Button fx:id="btnOptionsNext" styleClass="nav-bar-button" maxWidth="Infinity" mnemonicParsing="false"
