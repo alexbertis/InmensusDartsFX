@@ -1,10 +1,14 @@
-package fxcontrollers;
+package org.brontapps.inmensusdartsfx.fxcontrollers;
 
-import beans.DatosTirada;
-import beans.Gamer;
-import beans.WaitInfo;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
+import javafx.scene.control.Label;
+import org.brontapps.inmensusdartsfx.beans.DatosTirada;
+import org.brontapps.inmensusdartsfx.beans.Gamer;
+import org.brontapps.inmensusdartsfx.beans.WaitInfo;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -14,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -23,8 +26,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import purejavacomm.CommPortIdentifier;
-import purejavacomm.SerialPort;
+//import purejavacomm.CommPortIdentifier;
+//import purejavacomm.SerialPort;
+import com.fazecast.jSerialComm.SerialPort;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -53,26 +57,38 @@ public class X01ScreenController extends BaseGuiController {
     private GridPane padreJugadores;
 
     private void attachSerialListener(String deviceName) throws Exception {
-        CommPortIdentifier portId = CommPortIdentifier.getPortIdentifier(deviceName);
+        SerialPort[] ports = SerialPort.getCommPorts();
+        for (SerialPort puerto : ports){
+            if (puerto.getSystemPortName().equals(deviceName)){
+                port= puerto;
+                break;
+            }
+        }
 
         // Opening the port
-        port = (SerialPort) portId.open("InmensusDarts", 1000);
-
-        InputStream inStream = port.getInputStream();
-        Scanner scanner = new Scanner(inStream);
-
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                String sector = scanner.nextLine();
-                System.out.println("Recibido desde diana: " + sector);
-                // TODO: hacer cosas con la linea y en algun momento romper el bucle
-                if (!waitInfo.isWaiting()) {
-                    Platform.runLater(() -> tirada(sector));
+        if (port != null) {
+            boolean isOpen = port.openPort();
+            
+            port.addDataListener(new SerialPortDataListener() {
+                @Override
+                public int getListeningEvents() {
+                    return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
                 }
-            }
-        }, 0, 200);
+
+                @Override
+                public void serialEvent(SerialPortEvent serialPortEvent) {
+                    if (serialPortEvent.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
+                        return;
+                    byte[] newData = new byte[port.bytesAvailable()];
+                    int numRead = port.readBytes(newData, newData.length);
+                    String receivedData = new String(newData);
+                    if (!waitInfo.isWaiting()) {
+                        tirada(receivedData.trim());
+                    }
+                }
+
+            });
+        }
     }
 
     public void initGame(String usbDeviceName) {
@@ -111,7 +127,7 @@ public class X01ScreenController extends BaseGuiController {
 
     private void clearTirada() {
         totalTirada = 0;
-        txtShotTotal.setText(String.valueOf(totalTirada));
+        txtShotTotal.setText(getStringTotal(totalTirada));
 
         contShot1.setVisible(false);
         contShot2.setVisible(false);
@@ -158,44 +174,50 @@ public class X01ScreenController extends BaseGuiController {
     }
 
     private void appendGamerLinearLayout(Gamer gamer, float sizeName, float sizePoints, GridPane root, int rowIndex, int colIndex) {
-        VBox gamerLinearLayout = new VBox();
-        VBox.setVgrow(gamerLinearLayout, Priority.ALWAYS);
-        gamerLinearLayout.setMaxWidth(Double.POSITIVE_INFINITY);
-        gamerLinearLayout.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FFFA"), new CornerRadii(30), new Insets(10))));
-        //gamerLinearLayout.setBorder(new Border(new BorderStroke(Paint.valueOf("#000"))));
-        gamerLinearLayout.setAlignment(Pos.CENTER);
+        GridPane gamerPane = new GridPane();
+        RowConstraints row1 = new RowConstraints();
+        row1.setPercentHeight(40.0);
+        RowConstraints row2 = new RowConstraints();
+        row2.setPercentHeight(60.0);
+        gamerPane.getRowConstraints().addAll(row1, row2);
+
+        gamerPane.setMaxWidth(Double.POSITIVE_INFINITY);
+        gamerPane.setBackground(new Background(new BackgroundFill(Paint.valueOf("#FFFA"), new CornerRadii(30), new Insets(10))));
+        gamerPane.setAlignment(Pos.CENTER);
 
         Text tvGamerName = new Text(gamer.getName());
         tvGamerName.getStyleClass().add("gamer-name");
-        //tvGamerName.setFont(ResourcesCompat.getFont(this, R.font.malvie));
         tvGamerName.setTextAlignment(TextAlignment.CENTER);
         tvGamerName.setFont(Font.font(sizeName));
-        //tvGamerName.(Color.parseColor("#000066"));
-        //tvGamerName.setLayoutParams(linearLayoutGamerLp1);
 
         Text tvGamerPoints = new Text(String.valueOf(gamer.getPuntuacion()));
         tvGamerPoints.setTextAlignment(TextAlignment.CENTER);
         tvGamerPoints.setFont(Font.font(sizePoints));
-        //tvGamerPoints.setTextColor(Color.parseColor("#000000"));
+        tvGamerPoints.getStyleClass().add("gamer-points");
         gamer.setTextViewPuntuacion(tvGamerPoints);
 
-        gamerLinearLayout.getChildren().addAll(tvGamerName, tvGamerPoints);
-        gamer.setLinearLayout(gamerLinearLayout);
+        gamerPane.add(tvGamerName,0, 0);
+        gamerPane.add(tvGamerPoints,0, 1);
+        gamerPane.setValignment(tvGamerName, VPos.TOP);
+        gamerPane.setValignment(tvGamerPoints, VPos.TOP);
+        gamerPane.setHalignment(tvGamerName, HPos.CENTER);
+        gamerPane.setHalignment(tvGamerPoints, HPos.CENTER);
+        gamer.setLinearLayout(gamerPane);
 
-        root.add(gamerLinearLayout, colIndex, rowIndex, 2, 1);
+        root.add(gamerPane, colIndex, rowIndex, 2, 1);
     }
 
     private float getFontSizeName(int corte) {
         float fontSize = 30.0f;
         switch (corte) {
             case 1:
-                fontSize = 60.0f;
+                fontSize = 90.0f;
                 break;
             case 2:
-                fontSize = 40.0f;
+                fontSize = 60.0f;
                 break;
             case 3:
-                fontSize = 25.0f;
+                fontSize = 30.0f;
                 break;
             case 4:
                 fontSize = 20.0f;
@@ -209,13 +231,13 @@ public class X01ScreenController extends BaseGuiController {
         float fontSize = 30.0f;
         switch (corte) {
             case 1:
-                fontSize = 120.0f;
+                fontSize = 150.0f;
                 break;
             case 2:
-                fontSize = 80.0f;
+                fontSize = 120.0f;
                 break;
             case 3:
-                fontSize = 70.0f;
+                fontSize = 90.0f;
                 break;
             case 4:
                 fontSize = 60.0f;
@@ -257,16 +279,18 @@ public class X01ScreenController extends BaseGuiController {
             }
             waitInfo.setWaiting(true);
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Retirar dardos");
-            alert.setHeaderText("Retirar dardos");
-            alert.setContentText("Retire los dardos y pulse continuar");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Retirar dardos");
+                alert.setHeaderText("Retirar dardos");
+                alert.setContentText("Retire los dardos y pulse continuar");
 
-            alert.setOnHidden(dialogEvent -> {
-                nextPlayer();
-                waitInfo.setWaiting(false);
+                alert.setOnHidden(dialogEvent -> {
+                    nextPlayer();
+                    waitInfo.setWaiting(false);
+                });
+                alert.show();
             });
-            alert.show();
         } else if (puntosAcumulados > 0) {
             players.get(jugadorActual).setPuntuacion(puntosAcumulados);
             players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
@@ -279,34 +303,37 @@ public class X01ScreenController extends BaseGuiController {
                     nextPlayer();
                 } else {
                     waitInfo.setWaiting(true);
+                    Platform.runLater(() -> {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                        alert.setTitle("Retirar dardos");
+                        alert.setHeaderText("Retirar dardos");
+                        alert.setContentText("Retire los dardos y pulse continuar");
 
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Retirar dardos");
-                    alert.setHeaderText("Retirar dardos");
-                    alert.setContentText("Retire los dardos y pulse continuar");
-
-                    alert.setOnHidden(dialogEvent -> {
-                        nextPlayer();
-                        waitInfo.setWaiting(false);
+                        alert.setOnHidden(dialogEvent -> {
+                            nextPlayer();
+                            waitInfo.setWaiting(false);
+                        });
+                        alert.show();
                     });
-                    alert.show();
                 }
             }
         } else {
             waitInfo.setWaiting(true);
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Te has pasado");
-            alert.setHeaderText("Te has pasado");
-            alert.setContentText("Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Te has pasado");
+                alert.setHeaderText("Te has pasado");
+                alert.setContentText("Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
 
-            alert.setOnHidden(dialogEvent -> {
-                players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
-                players.get(jugadorActual).setPuntuacion(puntuacionInicial);
-                nextPlayer();
-                waitInfo.setWaiting(false);
+                alert.setOnHidden(dialogEvent -> {
+                    players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
+                    players.get(jugadorActual).setPuntuacion(puntuacionInicial);
+                    nextPlayer();
+                    waitInfo.setWaiting(false);
+                });
+                alert.show();
             });
-            alert.show();
         }
     }
 
@@ -322,34 +349,37 @@ public class X01ScreenController extends BaseGuiController {
 
         if (finPartida) {
             waitInfo.setWaiting(true);
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            String sbFinPartida = "El ganador es " + winner.getName() + "\n\n" +
-                    "Fin de la partida.\n¿Quiere repetir la partida?";
-            alert.setTitle("Fin de partida");
-            alert.setHeaderText("Fin de partida");
-            alert.setContentText(sbFinPartida);
+            Platform.runLater(() -> {
 
-            alert.setOnHidden(dialogEvent -> {
-                if (timer != null) timer.cancel();
-                if (port != null) port.close();
-                if (alert.getResult().equals(ButtonType.OK)) {
-                    int puntuacion = Integer.parseInt(gameInfo.getGameMode());
-                    for (Gamer gamer : players) {
-                        gamer.setPuntuacion(puntuacion);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                String sbFinPartida = "El ganador es " + winner.getName() + "\n\n" +
+                        "Fin de la partida.\n¿Quiere repetir la partida?";
+                alert.setTitle("Fin de partida");
+                alert.setHeaderText("Fin de partida");
+                alert.setContentText(sbFinPartida);
+
+                alert.setOnHidden(dialogEvent -> {
+                    if (timer != null) timer.cancel();
+                    if (port != null) port.closePort();
+                    if (alert.getResult().equals(ButtonType.OK)) {
+                        int puntuacion = Integer.parseInt(gameInfo.getGameMode());
+                        for (Gamer gamer : players) {
+                            gamer.setPuntuacion(puntuacion);
+                        }
+                        initGame(port.getDescriptivePortName());
+                    } else {
+                        try {
+                            Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
+                            Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+                            stage.getScene().setRoot(root);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Platform.exit();
+                        }
                     }
-                    initGame(port.getName());
-                } else {
-                    try {
-                        Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
-                        Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
-                        stage.getScene().setRoot(root);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Platform.exit();
-                    }
-                }
+                });
+                alert.show();
             });
-            alert.show();
 
         } else {
             txtRoundNumber.setText(String.valueOf(round));
@@ -404,7 +434,7 @@ public class X01ScreenController extends BaseGuiController {
         }
         datosTirada.setPuntos(puntosSuma);
         totalTirada += puntosSuma;
-        txtShotTotal.setText(String.valueOf(totalTirada));
+        txtShotTotal.setText(getStringTotal(totalTirada));
 
         switch (tirada) {
             case 1:
@@ -448,11 +478,11 @@ public class X01ScreenController extends BaseGuiController {
     }
 
 
-    private void setInactivePlayer(VBox box) {
+    private void setInactivePlayer(GridPane box) {
         box.setBackground(new Background(new BackgroundFill(Paint.valueOf("#B1BCBEAA"), new CornerRadii(20), Insets.EMPTY)));
     }
 
-    private void setActivePlayer(VBox box) {
+    private void setActivePlayer(GridPane box) {
         box.setBackground(new Background(new BackgroundFill(Paint.valueOf("#00FF00AA"), new CornerRadii(20), Insets.EMPTY)));
     }
 
@@ -469,4 +499,7 @@ public class X01ScreenController extends BaseGuiController {
         }
     }
 
+    private String getStringTotal(int valor){
+        return "Total: " + String.valueOf(valor);
+    }
 }

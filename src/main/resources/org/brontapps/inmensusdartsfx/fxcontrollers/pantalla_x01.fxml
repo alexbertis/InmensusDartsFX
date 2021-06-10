@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<HBox alignment="center" spacing="10"
+      style="-fx-background-image: url(org/brontapps/inmensusdartsfx/images/elegant_bg.png);-fx-background-size: cover;"
+      stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.brontapps.inmensusdartsfx.fxcontrollers.X01ScreenController">
+
+     <GridPane vgap="10">
+         <padding><Insets top="10" right="5" bottom="10" left="5"/></padding>
+
+        <children>
+        <VBox maxHeight="Infinity" styleClass="x01-container" VBox.vgrow="ALWAYS" fx:id="x01RoundContainer"
+              GridPane.rowIndex="0" alignment="TOP_CENTER">
+            <ImageView fitHeight="80.0" preserveRatio="true">
+                <Image backgroundLoading="true" url="@/org/brontapps/inmensusdartsfx/images/img_ronda.png" />
+            </ImageView>
+            <Text fx:id="txtRoundNumber" text="1"   textAlignment="CENTER"/>
+        </VBox>
+        <VBox maxHeight="Infinity" styleClass="x01-container" VBox.vgrow="ALWAYS" fx:id="x01ShotsContainer"
+              GridPane.rowIndex="1"  alignment="TOP_CENTER">
+            <ImageView fitHeight="80.0" preserveRatio="true">
+                <Image backgroundLoading="true" url="@/org/brontapps/inmensusdartsfx/images/img_tirada.png" />
+            </ImageView>
+            <Text fx:id="txtShotTotal" textAlignment="CENTER" text="Total: 000" />
+            <HBox fx:id="contShot1" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                <ImageView fitWidth="150.0" preserveRatio="true">
+                    <Image backgroundLoading="true" url="@/org/brontapps/inmensusdartsfx/images/dart.png" />
+                </ImageView>
+                <Text fx:id="txtShot1" />
+            </HBox>
+            <HBox fx:id="contShot2" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                <ImageView fitWidth="150.0" preserveRatio="true">
+                    <Image backgroundLoading="true" url="@/org/brontapps/inmensusdartsfx/images/dart.png" />
+                </ImageView>
+                <Text fx:id="txtShot2" />
+            </HBox>
+            <HBox fx:id="contShot3" alignment="CENTER_LEFT" maxHeight="Infinity" VBox.vgrow="ALWAYS">
+                <ImageView fitWidth="150.0" preserveRatio="true">
+                    <Image backgroundLoading="true" url="@/org/brontapps/inmensusdartsfx/images/dart.png" />
+                </ImageView>
+                <Text fx:id="txtShot3" />
+            </HBox>
+        </VBox>
+        </children>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" percentHeight="30.0" vgrow="SOMETIMES"/>
+            <RowConstraints minHeight="10.0" percentHeight="70.0" vgrow="SOMETIMES"/>
+        </rowConstraints>
+    </GridPane>
+
+    <GridPane fx:id="padreJugadores" maxWidth="Infinity" HBox.hgrow="ALWAYS" />
+
+</HBox>

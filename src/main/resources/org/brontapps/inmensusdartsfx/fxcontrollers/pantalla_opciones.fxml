@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-image: url(/images/elegant_bg.png);
+<GridPane alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-image: url(org/brontapps/inmensusdartsfx/images/elegant_bg.png);
 -fx-background-size: cover" stylesheets="@styles.css" vgap="10" xmlns="http://javafx.com/javafx/11.0.1"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxcontrollers.OptionsScreenController">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.brontapps.inmensusdartsfx.fxcontrollers.OptionsScreenController" fx:id="mainPane">
 
    <Label styleClass="label-options" text="N. de jugadores" />
    <HBox styleClass="button-options" fx:id="numPlayersBox" GridPane.columnIndex="1" >
@@ -30,7 +30,7 @@
       <ToggleButton toggleGroup="$gameGroup" maxWidth="Infinity" mnemonicParsing="false" text="Cricket" HBox.hgrow="ALWAYS" fx:id="CricketButton"/>
    </HBox>
 
-   <Label styleClass="label-options" text="Modo X01" GridPane.rowIndex="2" />
+   <Label styleClass="label-options" text="Modo X01" GridPane.rowIndex="2" fx:id="x01ModeLabel"/>
    <HBox styleClass="button-options" fx:id="x01ModeBox" GridPane.columnIndex="1" GridPane.rowIndex="2">
       <fx:define>
          <ToggleGroup fx:id="x01ModeGroup" />
@@ -40,7 +40,7 @@
       <ToggleButton toggleGroup="$x01ModeGroup" maxWidth="Infinity" mnemonicParsing="false" text="701" HBox.hgrow="ALWAYS" />
    </HBox>
 
-   <Label styleClass="label-options" text="Modo" GridPane.rowIndex="3" />
+   <Label styleClass="label-options" text="Modo" GridPane.rowIndex="3" fx:id="modeLabel"/>
    <HBox styleClass="button-options" fx:id="modeBox" GridPane.columnIndex="1" GridPane.rowIndex="3" disable="true">
       <fx:define>
          <ToggleGroup fx:id="modeGroup" />

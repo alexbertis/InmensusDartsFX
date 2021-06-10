@@ -1,4 +1,6 @@
-import fxcontrollers.MainScreenController;
+package org.brontapps.inmensusdartsfx;
+
+import org.brontapps.inmensusdartsfx.fxcontrollers.MainScreenController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import jssc.SerialPortList;
+
 
 import java.util.Locale;
 import java.util.ResourceBundle;

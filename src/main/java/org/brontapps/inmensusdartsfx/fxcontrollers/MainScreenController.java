@@ -1,4 +1,4 @@
-package fxcontrollers;
+package org.brontapps.inmensusdartsfx.fxcontrollers;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -12,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import jssc.SerialPortList;
+
 
 public class MainScreenController extends BaseGuiController {
 
@@ -30,7 +31,7 @@ public class MainScreenController extends BaseGuiController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
             Parent root = loader.load();
             stage.getScene().setRoot(root);
-            loader.<OptionsScreenController>getController().initOptions();
+            loader.<OptionsScreenController>getController().initOptions(stage.getScene());
             if (timeline != null)
                 timeline.stop();
         }

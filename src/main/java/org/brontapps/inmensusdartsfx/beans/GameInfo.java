@@ -1,7 +1,7 @@
-package beans;
+package org.brontapps.inmensusdartsfx.beans;
 
 
-import utils.Constants;
+import org.brontapps.inmensusdartsfx.utils.Constants;
 
 public class GameInfo {
 

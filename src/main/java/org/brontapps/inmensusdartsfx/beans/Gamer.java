@@ -1,5 +1,6 @@
-package beans;
+package org.brontapps.inmensusdartsfx.beans;
 
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -8,7 +9,7 @@ public class Gamer {
     private String name;
     private int puntuacion;
     private Text textViewPuntuacion;
-    private VBox linearLayout;
+    private GridPane gamerPane;
 
     public Gamer(String name, int puntuacion) {
         this.name = name;
@@ -40,11 +41,11 @@ public class Gamer {
         this.textViewPuntuacion = textViewPuntuacion;
     }
 
-    public VBox getLinearLayout() {
-        return linearLayout;
+    public GridPane getLinearLayout() {
+        return gamerPane;
     }
 
-    public void setLinearLayout(VBox linearLayout) {
-        this.linearLayout = linearLayout;
+    public void setLinearLayout(GridPane gamerPane) {
+        this.gamerPane = gamerPane;
     }
 }

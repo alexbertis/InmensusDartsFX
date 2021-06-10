@@ -19,6 +19,14 @@
     -fx-font-weight: bold;
 }
 
+.text-options {
+    -fx-max-width: infinity;
+    -fx-max-height: infinity;
+    -fx-padding: 10;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+}
+
 .button-options, .button-options * {
     -fx-max-height: infinity;
 }
@@ -65,7 +73,10 @@ HBox > VBox > TextField {
 }
 
 #txtRoundNumber {
-    -fx-font-size: 30;
+    -fx-font: 100px Tahoma;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
+    -fx-stroke: black;
+    -fx-stroke-width: 1;
 }
 
 #x01ShotsContainer {
@@ -74,10 +85,16 @@ HBox > VBox > TextField {
 }
 
 #x01ShotsContainer > Text, #x01ShotsContainer > HBox > Text {
-    -fx-font-size: 30;
+    -fx-font-size: 40;
     -fx-font-weight: bold;
 }
 
 .gamer-name {
     -fx-padding: 10 0;
+    -fx-font-weight: bold;
+}
+
+.gamer-points {
+    -fx-padding: 10 0;
+    -fx-font-weight: bold;
 }

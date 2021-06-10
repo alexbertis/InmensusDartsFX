@@ -1,7 +1,7 @@
-package fxcontrollers;
+package org.brontapps.inmensusdartsfx.fxcontrollers;
 
-import beans.GameInfo;
-import beans.Gamer;
+import org.brontapps.inmensusdartsfx.beans.GameInfo;
+import org.brontapps.inmensusdartsfx.beans.Gamer;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;

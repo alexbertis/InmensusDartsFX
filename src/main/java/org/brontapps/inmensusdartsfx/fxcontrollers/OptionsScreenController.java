@@ -1,6 +1,8 @@
-package fxcontrollers;
+package org.brontapps.inmensusdartsfx.fxcontrollers;
 
-import beans.GameInfo;
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import org.brontapps.inmensusdartsfx.beans.GameInfo;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,15 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-
 
 public class OptionsScreenController extends BaseGuiController {
 
@@ -33,12 +31,26 @@ public class OptionsScreenController extends BaseGuiController {
     @FXML
     private HBox modeBox, x01ModeBox;
 
-    public void initOptions() {
-        btnOptionsBack.getScene().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            KeyCode code = event.getCode();
-            System.out.println(code);
+    private Scene scene;
+
+    private EventHandler<MouseEvent> mouseEventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+                Node nodo = scene.getFocusOwner();
+                if (nodo instanceof ToggleButton) {
+                    ((ToggleButton) nodo).setSelected(true);
+                    mouseEvent.consume();
+                }
+            }
+    };
+
+    private EventHandler<KeyEvent> keyEventHandler = new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent keyEvent) {
+            KeyCode code = keyEvent.getCode();
+            System.out.println("Options: " + code);
             if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.UP)) {
-                Scene scene = btnOptionsBack.getScene();
+
                 Parent focusedParent = scene.getFocusOwner().getParent();
                 if (code.equals(KeyCode.DOWN)) {
                     switch (focusedParent.getId()) {
@@ -64,7 +76,7 @@ public class OptionsScreenController extends BaseGuiController {
                             ((Node) numPlayersGroup.getSelectedToggle()).requestFocus();
                             break;
                     }
-                    event.consume();
+                    keyEvent.consume();
                 } else if (code.equals(KeyCode.UP)) {
                     switch (focusedParent.getId()) {
                         case "numPlayersBox":
@@ -87,15 +99,28 @@ public class OptionsScreenController extends BaseGuiController {
                             ((Node) roundsGroup.getSelectedToggle()).requestFocus();
                             break;
                     }
-                    event.consume();
+                    keyEvent.consume();
+
+                }
+            } else if (code.equals(KeyCode.ENTER)) {
+                Node nodo = ((Node) keyEvent.getTarget());
+                if (nodo instanceof ToggleButton) {
+                    ((ToggleButton) nodo).setSelected(true);
+                    keyEvent.consume();
                 }
             }
-        });
+
+        }
+    };
+
+    public void initOptions(Scene scene) {
+        this.scene = scene;
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEventHandler);
+        scene.addEventFilter(MouseEvent.MOUSE_RELEASED, mouseEventHandler);
 
         gameGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-
                 x01ModeBox.setDisable(!X01Button.isSelected());
                 modeBox.setDisable(!CricketButton.isSelected());
             }
@@ -109,14 +134,14 @@ public class OptionsScreenController extends BaseGuiController {
     private void handleButtonAction(ActionEvent event) throws Exception {
         Stage stage;
         Parent root;
+        stage = (Stage)scene.getWindow();
+        scene.removeEventFilter(KeyEvent.KEY_PRESSED, keyEventHandler);
+        scene.removeEventFilter(MouseEvent.MOUSE_RELEASED, mouseEventHandler);
 
         if (event.getSource() == btnOptionsBack) {
-            stage = (Stage) btnOptionsBack.getScene().getWindow();
             root = FXMLLoader.load(getClass().getResource("pantalla_principal.fxml"), getStringsBundle());
             stage.getScene().setRoot(root);
         } else if (event.getSource() == btnOptionsNext) {
-            stage = (Stage) btnOptionsNext.getScene().getWindow();
-
             gameInfo = new GameInfo(Integer.parseInt(
                     getSelectedFromToggleGroup(numPlayersGroup, "1")),
                     getSelectedFromToggleGroup(gameGroup, "X01"),
@@ -125,10 +150,8 @@ public class OptionsScreenController extends BaseGuiController {
                     getSelectedFromToggleGroup(x01ModeGroup, "301"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_nombres.fxml"), getStringsBundle());
             root = loader.load();
-            loader.<NamesScreenController>getController().hideTextFields();
+            loader.<NamesScreenController>getController().initOptions(stage.getScene());
             stage.getScene().setRoot(root);
-        } else {
-
         }
     }
 

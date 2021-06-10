@@ -1,4 +1,4 @@
-package utils;
+package org.brontapps.inmensusdartsfx.utils;
 
 public class Constants {
 

@@ -1,4 +1,4 @@
-package beans;
+package org.brontapps.inmensusdartsfx.beans;
 
 public class WaitInfo {
     private boolean waiting = false;
