@@ -7,8 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import jssc.SerialPortList;
 
 
 import java.util.Locale;
@@ -42,10 +42,6 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
-        System.out.println("Puertos:");
-        for (String port : SerialPortList.getPortNames())
-            System.out.println(port);
-        System.out.println("-----------");
         launch(args);
     }
 }

@@ -1,5 +1,7 @@
 package org.brontapps.inmensusdartsfx.fxcontrollers;
 
+import com.fazecast.jSerialComm.SerialPort;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -11,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jssc.SerialPortList;
-
 
 public class MainScreenController extends BaseGuiController {
 
@@ -41,7 +41,11 @@ public class MainScreenController extends BaseGuiController {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
             String previousPort = selectDeviceMain.getValue();
             System.out.println("Scanning ports again...");
-            String[] ports = SerialPortList.getPortNames();
+            SerialPort[] serialPorts = SerialPort.getCommPorts();
+            String ports[] = new String[serialPorts.length];
+            for (int i = 0; i < serialPorts.length; i++)
+            	ports[i] = serialPorts[i].getSystemPortName();
+            	
             selectDeviceMain.getItems().setAll(ports);
             if (ports.length > 0) {
                 if (previousPort == null || previousPort.isBlank()) {

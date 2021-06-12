@@ -1,40 +1,64 @@
 package org.brontapps.inmensusdartsfx.fxcontrollers;
 
-import com.fazecast.jSerialComm.SerialPortDataListener;
-import com.fazecast.jSerialComm.SerialPortEvent;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
-import javafx.scene.control.Label;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Timer;
+
 import org.brontapps.inmensusdartsfx.beans.DatosTirada;
 import org.brontapps.inmensusdartsfx.beans.Gamer;
 import org.brontapps.inmensusdartsfx.beans.WaitInfo;
+
+import com.fazecast.jSerialComm.SerialPort;
+import com.fazecast.jSerialComm.SerialPortDataListener;
+import com.fazecast.jSerialComm.SerialPortEvent;
+
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Paint;
+import javafx.scene.paint.Stop;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-//import purejavacomm.CommPortIdentifier;
-//import purejavacomm.SerialPort;
-import com.fazecast.jSerialComm.SerialPort;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.*;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 public class X01ScreenController extends BaseGuiController {
 
@@ -45,6 +69,10 @@ public class X01ScreenController extends BaseGuiController {
     int totalTirada = 0;
     int puntuacionInicial = 0;
     Gamer winner = null;
+    
+    private MediaPlayer sound_dardo_nulo = null;
+    private MediaPlayer sound_dardo_simple = null;
+    private MediaPlayer sound_dardo_triple = null;
 
     private SerialPort port;
     private Timer timer;
@@ -110,6 +138,30 @@ public class X01ScreenController extends BaseGuiController {
         jugadorActual = 0;
         totalTirada = 0;
         winner = null;
+
+        try {
+	        sound_dardo_nulo = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_nulo.mp3").toURI().toString()));
+	        sound_dardo_simple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_simple.mp3").toURI().toString()));
+	        sound_dardo_triple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_triple.mp3").toURI().toString()));
+//	        sound_dardo_nulo.setOnEndOfMedia(new Runnable() {
+//	            public void run() {
+//	            	sound_dardo_nulo.seek(Duration.ZERO);
+//	            }
+//	        });
+//	        sound_dardo_simple.setOnEndOfMedia(new Runnable() {
+//	            public void run() {
+//	            	sound_dardo_simple.seek(Duration.ZERO);
+//	            }
+//	        });
+//	        sound_dardo_triple.setOnEndOfMedia(new Runnable() {
+//	            public void run() {
+//	            	sound_dardo_triple.seek(Duration.ZERO);
+//	            }
+//	        });
+
+
+        }catch (URISyntaxException e)
+        {}
 
         txtRoundNumber.setText(String.valueOf(round));
         clearTirada();
@@ -198,10 +250,10 @@ public class X01ScreenController extends BaseGuiController {
 
         gamerPane.add(tvGamerName,0, 0);
         gamerPane.add(tvGamerPoints,0, 1);
-        gamerPane.setValignment(tvGamerName, VPos.TOP);
-        gamerPane.setValignment(tvGamerPoints, VPos.TOP);
-        gamerPane.setHalignment(tvGamerName, HPos.CENTER);
-        gamerPane.setHalignment(tvGamerPoints, HPos.CENTER);
+        GridPane.setValignment(tvGamerName, VPos.TOP);
+        GridPane.setValignment(tvGamerPoints, VPos.TOP);
+        GridPane.setHalignment(tvGamerName, HPos.CENTER);
+        GridPane.setHalignment(tvGamerPoints, HPos.CENTER);
         gamer.setLinearLayout(gamerPane);
 
         root.add(gamerPane, colIndex, rowIndex, 2, 1);
@@ -256,12 +308,12 @@ public class X01ScreenController extends BaseGuiController {
         int puntosParaRestar = 0;
         DatosTirada datosTirada = codigoAPuntos(nuevosPuntos);
         if (datosTirada.getPuntos() == 0) {
-            playMp3("/music/dardo_nulo.mp3");
+            playMp3(sound_dardo_nulo);
         }
         if (datosTirada.isTriple()) {
-            playMp3("/music/dardo_triple.mp3");
+            playMp3(sound_dardo_triple);
         } else {
-            playMp3("/music/dardo_simple.mp3");
+            playMp3(sound_dardo_simple);
         }
         puntosParaRestar = datosTirada.getPuntos();
 
@@ -280,16 +332,14 @@ public class X01ScreenController extends BaseGuiController {
             waitInfo.setWaiting(true);
 
             Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Retirar dardos");
-                alert.setHeaderText("Retirar dardos");
-                alert.setContentText("Retire los dardos y pulse continuar");
-
-                alert.setOnHidden(dialogEvent -> {
-                    nextPlayer();
-                    waitInfo.setWaiting(false);
+                CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar");
+                dialog.setOnHidden(dialogEvent -> {
+                	nextPlayer();
+                	waitInfo.setWaiting(false);
                 });
-                alert.show();
+                dialog.openDialog();
+
+
             });
         } else if (puntosAcumulados > 0) {
             players.get(jugadorActual).setPuntuacion(puntosAcumulados);
@@ -304,16 +354,13 @@ public class X01ScreenController extends BaseGuiController {
                 } else {
                     waitInfo.setWaiting(true);
                     Platform.runLater(() -> {
-                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                        alert.setTitle("Retirar dardos");
-                        alert.setHeaderText("Retirar dardos");
-                        alert.setContentText("Retire los dardos y pulse continuar");
-
-                        alert.setOnHidden(dialogEvent -> {
-                            nextPlayer();
-                            waitInfo.setWaiting(false);
+                        CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar");
+                        dialog.setOnHidden(dialogEvent -> {
+                        	nextPlayer();
+                        	waitInfo.setWaiting(false);
                         });
-                        alert.show();
+                        dialog.openDialog();
+
                     });
                 }
             }
@@ -321,18 +368,15 @@ public class X01ScreenController extends BaseGuiController {
             waitInfo.setWaiting(true);
 
             Platform.runLater(() -> {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Te has pasado");
-                alert.setHeaderText("Te has pasado");
-                alert.setContentText("Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
-
-                alert.setOnHidden(dialogEvent -> {
+                CustomDialog dialog = new CustomDialog("Te has pasado", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
+                dialog.setOnHidden(dialogEvent -> {
                     players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
                     players.get(jugadorActual).setPuntuacion(puntuacionInicial);
                     nextPlayer();
                     waitInfo.setWaiting(false);
                 });
-                alert.show();
+                dialog.openDialog();
+
             });
         }
     }
@@ -351,23 +395,12 @@ public class X01ScreenController extends BaseGuiController {
             waitInfo.setWaiting(true);
             Platform.runLater(() -> {
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 String sbFinPartida = "El ganador es " + winner.getName() + "\n\n" +
                         "Fin de la partida.\n¿Quiere repetir la partida?";
-                alert.setTitle("Fin de partida");
-                alert.setHeaderText("Fin de partida");
-                alert.setContentText(sbFinPartida);
-
-                alert.setOnHidden(dialogEvent -> {
+                CustomDialog dialog = new CustomDialog("Fin de partida", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
+                dialog.setOnHidden(dialogEvent -> {
                     if (timer != null) timer.cancel();
                     if (port != null) port.closePort();
-                    if (alert.getResult().equals(ButtonType.OK)) {
-                        int puntuacion = Integer.parseInt(gameInfo.getGameMode());
-                        for (Gamer gamer : players) {
-                            gamer.setPuntuacion(puntuacion);
-                        }
-                        initGame(port.getDescriptivePortName());
-                    } else {
                         try {
                             Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
                             Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
@@ -376,9 +409,8 @@ public class X01ScreenController extends BaseGuiController {
                             e.printStackTrace();
                             Platform.exit();
                         }
-                    }
                 });
-                alert.show();
+                dialog.openDialog();
             });
 
         } else {
@@ -486,20 +518,120 @@ public class X01ScreenController extends BaseGuiController {
         box.setBackground(new Background(new BackgroundFill(Paint.valueOf("#00FF00AA"), new CornerRadii(20), Insets.EMPTY)));
     }
 
-    private void playMp3(String filename) {
-        try {
-            URL resource = getClass().getResource(filename);
-            if (null != resource) {
-                Media media = new Media(resource.toURI().toString());
-                MediaPlayer player = new MediaPlayer(media);
-                player.play();
-            }
-        } catch (URISyntaxException | NullPointerException e) {
-            e.printStackTrace();
-        }
+    private void playMp3(MediaPlayer player) {
+    	Runnable runSound = new Runnable() {
+				
+			@Override
+			public void run() {
+	            if (null != player) {
+	            	player.setVolume(1.0);
+	            	player.seek(Duration.ZERO);
+	                player.play();
+	            }
+			}
+		};
+		runSound.run();
     }
+    
 
     private String getStringTotal(int valor){
         return "Total: " + String.valueOf(valor);
     }
+    
+    
+    private static final Interpolator EXP_IN = new Interpolator() {
+        @Override
+        protected double curve(double t) {
+            return (t == 1.0) ? 1.0 : 1 - Math.pow(2.0, -10 * t);
+        }
+    };
+
+    private static final Interpolator EXP_OUT = new Interpolator() {
+        @Override
+        protected double curve(double t) {
+            return (t == 0.0) ? 0.0 : Math.pow(2.0, 10 * (t - 1));
+        }
+    };
+
+    private static class CustomDialog extends Stage {
+
+        private ScaleTransition scale1 = new ScaleTransition();
+        private ScaleTransition scale2 = new ScaleTransition();
+
+        private SequentialTransition anim = new SequentialTransition(scale1, scale2);
+
+        CustomDialog(String header, String content) {
+            Pane root = new Pane();
+
+            scale1.setFromX(0.01);
+            scale1.setFromY(0.01);
+            scale1.setToY(1.0);
+            scale1.setDuration(Duration.seconds(0.33));
+            scale1.setInterpolator(EXP_IN);
+            scale1.setNode(root);
+
+            scale2.setFromX(0.01);
+            scale2.setToX(1.0);
+            scale2.setDuration(Duration.seconds(0.33));
+            scale2.setInterpolator(EXP_OUT);
+            scale2.setNode(root);
+
+            initStyle(StageStyle.TRANSPARENT);
+            initModality(Modality.APPLICATION_MODAL);
+
+
+            Text headerText = new Text(header);
+            headerText.setFont(Font.font("Copperplate Gothic Light", 60));
+            headerText.setTextAlignment(TextAlignment.CENTER);
+
+
+            Text contentText = new Text(content);
+            contentText.setFont(Font.font("Candara",50));
+            contentText.setTextAlignment(TextAlignment.CENTER);
+
+            VBox box = new VBox(10,
+                    headerText,
+                    new Separator(Orientation.HORIZONTAL),
+                    contentText
+            );
+            box.setPadding(new Insets(15));
+            box.setAlignment(Pos.CENTER);
+
+            double headerWidht = headerText.getLayoutBounds().getWidth();
+            double contentWidth = contentText.getLayoutBounds().getWidth();
+            double maxWidth = Math.max(headerWidht, contentWidth);
+            Rectangle bg = new Rectangle(maxWidth + 50, 400);
+            bg.setStroke(Color.BLACK);
+            bg.setStrokeWidth(1.5);
+
+            Stop[] stops = new Stop[] { new Stop(0, Color.GREY), new Stop(1, Color.RED)};
+            LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
+            bg.setFill(lg1);
+            
+            Button btn = new Button("Continuar");
+            btn.setTranslateX(50);
+            btn.setTranslateY(bg.getHeight() - 50);
+            btn.setPrefWidth(bg.getWidth() - 100);
+            btn.setPrefHeight(50);
+            btn.setOnAction(e -> closeDialog());
+
+            root.getChildren().addAll(bg,box,btn);
+
+            setScene(new Scene(root, null));
+        }
+
+        void openDialog() {
+            show();
+
+            anim.play();
+        }
+
+        void closeDialog() {
+            anim.setOnFinished(e -> close());
+            anim.setAutoReverse(true);
+            anim.setCycleCount(2);
+            anim.playFrom(Duration.seconds(0.66));
+        }
+    }
+
 }
