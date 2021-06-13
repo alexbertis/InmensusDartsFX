@@ -3,6 +3,8 @@ package org.brontapps.inmensusdartsfx.fxcontrollers;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import org.brontapps.inmensusdartsfx.beans.GameInfo;
+import org.brontapps.inmensusdartsfx.utils.Constants;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -49,22 +51,24 @@ public class OptionsScreenController extends BaseGuiController {
         public void handle(KeyEvent keyEvent) {
             KeyCode code = keyEvent.getCode();
             System.out.println("Options: " + code);
-            if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.UP)) {
+            if (code.equals(KeyCode.DOWN) || code.equals(KeyCode.UP) || code.equals(KeyCode.RIGHT)) {
 
                 Parent focusedParent = scene.getFocusOwner().getParent();
-                if (code.equals(KeyCode.DOWN)) {
+                if (code.equals(KeyCode.RIGHT)) {
+                	if (focusedParent.getId().equals("gameBox")) {
+                        ((Node) gameGroup.getSelectedToggle()).requestFocus();
+                        keyEvent.consume();
+                	}
+                }else if (code.equals(KeyCode.DOWN)) {
                     switch (focusedParent.getId()) {
                         case "numPlayersBox":
                             ((Node) gameGroup.getSelectedToggle()).requestFocus();
                             break;
                         case "gameBox":
-                            if (!x01ModeBox.isDisable())
-                                ((Node) x01ModeGroup.getSelectedToggle()).requestFocus();
-                            else
-                                ((Node) modeGroup.getSelectedToggle()).requestFocus();
+                            ((Node) x01ModeGroup.getSelectedToggle()).requestFocus();
                             break;
                         case "x01ModeBox":
-                            ((Node) roundsGroup.getSelectedToggle()).requestFocus();
+                            ((Node) modeGroup.getSelectedToggle()).requestFocus();
                             break;
                         case "modeBox":
                             ((Node) roundsGroup.getSelectedToggle()).requestFocus();
@@ -86,14 +90,13 @@ public class OptionsScreenController extends BaseGuiController {
                             ((Node) numPlayersGroup.getSelectedToggle()).requestFocus();
                             break;
                         case "x01ModeBox":
-                        case "modeBox":
                             ((Node) gameGroup.getSelectedToggle()).requestFocus();
                             break;
+                        case "modeBox":
+                            ((Node) x01ModeGroup.getSelectedToggle()).requestFocus();
+                            break;
                         case "roundsBox":
-                            if (!modeBox.isDisable())
-                                ((Node) modeGroup.getSelectedToggle()).requestFocus();
-                            else
-                                ((Node) x01ModeGroup.getSelectedToggle()).requestFocus();
+                            ((Node) modeGroup.getSelectedToggle()).requestFocus();
                             break;
                         case "buttonsBox":
                             ((Node) roundsGroup.getSelectedToggle()).requestFocus();
@@ -118,14 +121,14 @@ public class OptionsScreenController extends BaseGuiController {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEventHandler);
         scene.addEventFilter(MouseEvent.MOUSE_RELEASED, mouseEventHandler);
 
-        gameGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-            @Override
-            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
-                x01ModeBox.setDisable(!X01Button.isSelected());
-                modeBox.setDisable(!CricketButton.isSelected());
-            }
-
-        });
+//        gameGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Toggle> observableValue, Toggle toggle, Toggle t1) {
+//                x01ModeBox.setDisable(!X01Button.isSelected());
+//                modeBox.setDisable(!CricketButton.isSelected());
+//            }
+//
+//        });
 
     }
 
@@ -142,11 +145,17 @@ public class OptionsScreenController extends BaseGuiController {
             root = FXMLLoader.load(getClass().getResource("pantalla_principal.fxml"), getStringsBundle());
             stage.getScene().setRoot(root);
         } else if (event.getSource() == btnOptionsNext) {
-            gameInfo = new GameInfo(Integer.parseInt(
+        	String numPlayers = getSelectedFromToggleGroup(numPlayersGroup, "1");
+        	String gameType = getSelectedFromToggleGroup(gameGroup, "X01");
+        	String rounds = getSelectedFromToggleGroup(roundsGroup, "10");
+        	String mode = getSelectedFromToggleGroup(modeGroup, Constants.X01_SINGLEINSINGLEOUT);
+        	String x01Mode = getSelectedFromToggleGroup(x01ModeGroup, "301");
+
+        	gameInfo = new GameInfo(Integer.parseInt(
                     getSelectedFromToggleGroup(numPlayersGroup, "1")),
                     getSelectedFromToggleGroup(gameGroup, "X01"),
                     Integer.parseInt(getSelectedFromToggleGroup(roundsGroup, "10")),
-                    getSelectedFromToggleGroup(modeGroup, "Single In Single Out"),
+                    getSelectedFromToggleGroup(modeGroup, Constants.X01_SINGLEINSINGLEOUT),
                     getSelectedFromToggleGroup(x01ModeGroup, "301"));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_nombres.fxml"), getStringsBundle());
             root = loader.load();

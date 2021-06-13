@@ -29,7 +29,7 @@ public class BaseGuiController implements Initializable {
     protected String getSelectedFromToggleGroup(ToggleGroup toggleGroup, String defaultValue) {
         if (toggleGroup == null) return defaultValue;
         ToggleButton button = (ToggleButton) toggleGroup.getSelectedToggle();
-        return button != null ? button.getText() : defaultValue;
+        return button != null ? button.getId() : defaultValue;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package org.brontapps.inmensusdartsfx.fxcontrollers;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,6 +75,9 @@ public class X01ScreenController extends BaseGuiController {
 
     private SerialPort port;
     private Timer timer;
+    
+    private final String REPETIR_PARTIDA = "Repetir partida";
+    private final String EMPEZAR_NUEVA = "Empezar partida";
 
     @FXML
     private Text txtShot1, txtShot2, txtShot3, txtShotTotal, txtRoundNumber;
@@ -109,9 +111,11 @@ public class X01ScreenController extends BaseGuiController {
                         return;
                     byte[] newData = new byte[port.bytesAvailable()];
                     int numRead = port.readBytes(newData, newData.length);
-                    String receivedData = new String(newData);
-                    if (!waitInfo.isWaiting()) {
-                        tirada(receivedData.trim());
+                    if (numRead > 0) {
+	                    String receivedData = new String(newData);
+	                    if (!waitInfo.isWaiting()) {
+	                        tirada(receivedData.trim());
+	                    }
                     }
                 }
 
@@ -143,25 +147,32 @@ public class X01ScreenController extends BaseGuiController {
 	        sound_dardo_nulo = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_nulo.mp3").toURI().toString()));
 	        sound_dardo_simple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_simple.mp3").toURI().toString()));
 	        sound_dardo_triple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_triple.mp3").toURI().toString()));
-//	        sound_dardo_nulo.setOnEndOfMedia(new Runnable() {
-//	            public void run() {
-//	            	sound_dardo_nulo.seek(Duration.ZERO);
-//	            }
-//	        });
-//	        sound_dardo_simple.setOnEndOfMedia(new Runnable() {
-//	            public void run() {
-//	            	sound_dardo_simple.seek(Duration.ZERO);
-//	            }
-//	        });
-//	        sound_dardo_triple.setOnEndOfMedia(new Runnable() {
-//	            public void run() {
-//	            	sound_dardo_triple.seek(Duration.ZERO);
-//	            }
-//	        });
-
 
         }catch (URISyntaxException e)
         {}
+
+        txtRoundNumber.setText(String.valueOf(round));
+        clearTirada();
+
+        waitInfo.setWaiting(false);
+
+    }
+
+    public void restartGame() {
+
+        for (Gamer gamer : players) {
+            setInactivePlayer(gamer.getLinearLayout());
+            gamer.setPuntuacion(Integer.parseInt(gameInfo.getGameMode()));
+            gamer.getTextViewPuntuacion().setText(gameInfo.getGameMode());
+            gamer.getLinearLayout().setBorder(new Border(new BorderStroke(Paint.valueOf("#000000"), BorderStrokeStyle.SOLID, new CornerRadii(20), new BorderWidths(4))));
+        }
+        setActivePlayer(players.get(0).getLinearLayout());
+
+        round = 1;
+        tirada = 1;
+        jugadorActual = 0;
+        totalTirada = 0;
+        winner = null;
 
         txtRoundNumber.setText(String.valueOf(round));
         clearTirada();
@@ -332,19 +343,20 @@ public class X01ScreenController extends BaseGuiController {
             waitInfo.setWaiting(true);
 
             Platform.runLater(() -> {
-                CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar");
+                CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
                 dialog.setOnHidden(dialogEvent -> {
                 	nextPlayer();
                 	waitInfo.setWaiting(false);
                 });
-                dialog.openDialog();
-
+//                dialog.openDialog();
+                dialog.showAndWait();
+                System.out.println("ButtonPressed " + dialog.getButtonPressed());
 
             });
         } else if (puntosAcumulados > 0) {
             players.get(jugadorActual).setPuntuacion(puntosAcumulados);
             players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
-
+            
             tirada++;
 
             if (tirada > 3) {
@@ -354,12 +366,14 @@ public class X01ScreenController extends BaseGuiController {
                 } else {
                     waitInfo.setWaiting(true);
                     Platform.runLater(() -> {
-                        CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar");
+                        CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
                         dialog.setOnHidden(dialogEvent -> {
                         	nextPlayer();
                         	waitInfo.setWaiting(false);
                         });
-                        dialog.openDialog();
+//                      dialog.openDialog();
+                        dialog.showAndWait();
+                        System.out.println("ButtonPressed " + dialog.getButtonPressed());
 
                     });
                 }
@@ -368,14 +382,14 @@ public class X01ScreenController extends BaseGuiController {
             waitInfo.setWaiting(true);
 
             Platform.runLater(() -> {
-                CustomDialog dialog = new CustomDialog("Te has pasado", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
+                CustomDialog dialog = new CustomDialog("Te has pasado", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar", "Continuar", null);
                 dialog.setOnHidden(dialogEvent -> {
                     players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
                     players.get(jugadorActual).setPuntuacion(puntuacionInicial);
                     nextPlayer();
                     waitInfo.setWaiting(false);
                 });
-                dialog.openDialog();
+                dialog.showAndWait();
 
             });
         }
@@ -397,20 +411,26 @@ public class X01ScreenController extends BaseGuiController {
 
                 String sbFinPartida = "El ganador es " + winner.getName() + "\n\n" +
                         "Fin de la partida.\n¿Quiere repetir la partida?";
-                CustomDialog dialog = new CustomDialog("Fin de partida", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar");
-                dialog.setOnHidden(dialogEvent -> {
+                CustomDialog dialog = new CustomDialog("Fin de partida", sbFinPartida.toString(), REPETIR_PARTIDA, EMPEZAR_NUEVA);
+                dialog.showAndWait();
+                String response = dialog.getButtonPressed();
+                if (null != response && response.equals(EMPEZAR_NUEVA)) {
                     if (timer != null) timer.cancel();
                     if (port != null) port.closePort();
-                        try {
-                            Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
-                            Parent root = FXMLLoader.load(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
-                            stage.getScene().setRoot(root);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Platform.exit();
-                        }
-                });
-                dialog.openDialog();
+                    try {
+                    	port.removeDataListener();
+                        Stage stage = (Stage) txtRoundNumber.getScene().getWindow();
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("pantalla_opciones.fxml"), getStringsBundle());
+                        Parent root = loader.load();
+                        stage.getScene().setRoot(root);
+                        loader.<OptionsScreenController>getController().initOptions(stage.getScene());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Platform.exit();
+                    }
+                }else {
+                	restartGame();
+                }
             });
 
         } else {
@@ -432,6 +452,7 @@ public class X01ScreenController extends BaseGuiController {
         } else if (nuevosPuntos.isBlank() || nuevosPuntos.trim().equals("0")) {
             datosTirada = actualizaTirada(0, (String) null);
         } else {
+        	
             lados = nuevosPuntos.split("x");
             int puntuacionTirada = Integer.parseInt(lados[0]) * Integer.parseInt(lados[1]);
             datosTirada = actualizaTirada(puntuacionTirada, lados);
@@ -554,13 +575,14 @@ public class X01ScreenController extends BaseGuiController {
     };
 
     private static class CustomDialog extends Stage {
+    	private String buttonPressed = null;
 
         private ScaleTransition scale1 = new ScaleTransition();
         private ScaleTransition scale2 = new ScaleTransition();
 
         private SequentialTransition anim = new SequentialTransition(scale1, scale2);
 
-        CustomDialog(String header, String content) {
+        CustomDialog(String header, String content, String button1, String button2) {
             Pane root = new Pane();
 
             scale1.setFromX(0.01);
@@ -608,14 +630,31 @@ public class X01ScreenController extends BaseGuiController {
             LinearGradient lg1 = new LinearGradient(0, 0, 1, 0, true, CycleMethod.NO_CYCLE, stops);
             bg.setFill(lg1);
             
-            Button btn = new Button("Continuar");
+            Button btn = new Button(button1);
+            btn.setFont(Font.font("Copperplate Gothic Light", 20));
             btn.setTranslateX(50);
             btn.setTranslateY(bg.getHeight() - 50);
             btn.setPrefWidth(bg.getWidth() - 100);
             btn.setPrefHeight(50);
-            btn.setOnAction(e -> closeDialog());
+            btn.setOnAction(e -> closeDialog(button1));
+            
+            Button btn2 = null;
+            if (button2 != null) {
+            	btn2 = new Button(button2);
+                btn2.setFont(Font.font("Copperplate Gothic Light", 20));
+                btn.setTranslateX((bg.getWidth() / 2) + 50);
+                btn2.setPrefHeight(50);
+                btn.setPrefWidth((bg.getWidth() / 2) - 50);
+                btn2.setPrefWidth((bg.getWidth() / 2) - 50);
+                btn2.setTranslateY(bg.getHeight() - 50);
+                btn2.setOnAction(e -> closeDialog(button2));
+            }
 
-            root.getChildren().addAll(bg,box,btn);
+            if (btn2 != null) {
+            	root.getChildren().addAll(bg,box,btn, btn2);
+            }else {
+            	root.getChildren().addAll(bg,box,btn);
+            }
 
             setScene(new Scene(root, null));
         }
@@ -626,11 +665,16 @@ public class X01ScreenController extends BaseGuiController {
             anim.play();
         }
 
-        void closeDialog() {
+        void closeDialog(String buttonPressed) {
+        	this.buttonPressed = buttonPressed;
             anim.setOnFinished(e -> close());
             anim.setAutoReverse(true);
             anim.setCycleCount(2);
             anim.playFrom(Duration.seconds(0.66));
+        }
+        
+        public String getButtonPressed() {
+        	return buttonPressed;
         }
     }
 
