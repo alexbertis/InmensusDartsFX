@@ -1,21 +1,21 @@
 package org.brontapps.inmensusdartsfx.fxcontrollers;
 
-import javafx.event.EventHandler;
-import javafx.scene.input.MouseEvent;
 import org.brontapps.inmensusdartsfx.beans.GameInfo;
 import org.brontapps.inmensusdartsfx.utils.Constants;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 

@@ -1,18 +1,17 @@
 package org.brontapps.inmensusdartsfx;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.brontapps.inmensusdartsfx.fxcontrollers.MainScreenController;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Main extends Application {
 

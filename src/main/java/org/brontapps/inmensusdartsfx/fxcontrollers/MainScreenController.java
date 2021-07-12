@@ -40,15 +40,21 @@ public class MainScreenController extends BaseGuiController {
     public void loadComboOptions() {
         timeline = new Timeline(new KeyFrame(Duration.ZERO, actionEvent -> {
             String previousPort = selectDeviceMain.getValue();
+            String selectedPort = null;
             System.out.println("Scanning ports again...");
             SerialPort[] serialPorts = SerialPort.getCommPorts();
             String ports[] = new String[serialPorts.length];
-            for (int i = 0; i < serialPorts.length; i++)
-            	ports[i] = serialPorts[i].getSystemPortName();
+            for (int i = 0; i < serialPorts.length; i++) {
+            	ports[i] = serialPorts[i].getPortDescription();
+            	if (ports[i].toUpperCase().contains("USB"))
+            		selectedPort = ports[i];
+            }
             	
             selectDeviceMain.getItems().setAll(ports);
             if (ports.length > 0) {
-                if (previousPort == null || previousPort.isBlank()) {
+            	if (selectedPort != null) {
+            		selectDeviceMain.setValue(selectedPort);
+            	} else if (previousPort == null || previousPort.isBlank()) {
                     selectDeviceMain.setValue(ports[0]);
                 } else {
                     selectDeviceMain.setValue(previousPort);

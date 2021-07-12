@@ -1,18 +1,18 @@
 package org.brontapps.inmensusdartsfx.fxcontrollers;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Scanner;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import org.brontapps.inmensusdartsfx.beans.DatosTirada;
 import org.brontapps.inmensusdartsfx.beans.Gamer;
 import org.brontapps.inmensusdartsfx.beans.WaitInfo;
 
 import com.fazecast.jSerialComm.SerialPort;
-import com.fazecast.jSerialComm.SerialPortDataListener;
-import com.fazecast.jSerialComm.SerialPortEvent;
 
 import javafx.animation.Interpolator;
 import javafx.animation.ScaleTransition;
@@ -89,7 +89,8 @@ public class X01ScreenController extends BaseGuiController {
     private void attachSerialListener(String deviceName) throws Exception {
         SerialPort[] ports = SerialPort.getCommPorts();
         for (SerialPort puerto : ports){
-            if (puerto.getSystemPortName().equals(deviceName)){
+            if (puerto.getPortDescription().equals(deviceName)){
+            	System.out.println("Encontrado puerto");
                 port= puerto;
                 break;
             }
@@ -97,30 +98,25 @@ public class X01ScreenController extends BaseGuiController {
 
         // Opening the port
         if (port != null) {
-            boolean isOpen = port.openPort();
-            
-            port.addDataListener(new SerialPortDataListener() {
+            port.openPort();
+            port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 0, 0);
+            InputStream portStream = port.getInputStream();
+            Scanner scanner = new Scanner(portStream);
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
                 @Override
-                public int getListeningEvents() {
-                    return SerialPort.LISTENING_EVENT_DATA_AVAILABLE;
-                }
-
-                @Override
-                public void serialEvent(SerialPortEvent serialPortEvent) {
-                    if (serialPortEvent.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
-                        return;
-                    byte[] newData = new byte[port.bytesAvailable()];
-                    int numRead = port.readBytes(newData, newData.length);
-                    if (numRead > 0) {
-	                    String receivedData = new String(newData);
-	                    if (!waitInfo.isWaiting()) {
-	                        tirada(receivedData.trim());
-	                    }
+                public void run() {
+                    String sector = scanner.nextLine();
+                    System.out.println("Recibido desde diana: " + sector);
+                    // TODO: hacer cosas con la linea y en algun momento romper el bucle
+                    if (!waitInfo.isWaiting()) {
+                        tirada(sector);
                     }
                 }
-
-            });
+            }, 0, 200);
         }
+
+        
     }
 
     public void initGame(String usbDeviceName) {
@@ -142,14 +138,20 @@ public class X01ScreenController extends BaseGuiController {
         jugadorActual = 0;
         totalTirada = 0;
         winner = null;
+    
+        Platform.runLater(() -> {
+            try {
+    	        sound_dardo_nulo = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_nulo.wav").toURI().toString()));
+    	        sound_dardo_simple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_simple.wav").toURI().toString()));
+    	        sound_dardo_triple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_triple.wav").toURI().toString()));
 
-        try {
-	        sound_dardo_nulo = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_nulo.mp3").toURI().toString()));
-	        sound_dardo_simple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_simple.mp3").toURI().toString()));
-	        sound_dardo_triple = new MediaPlayer(new Media(getClass().getResource("/org/brontapps/inmensusdartsfx/music/dardo_triple.mp3").toURI().toString()));
-
-        }catch (URISyntaxException e)
-        {}
+            }catch(Exception e) {
+            	sound_dardo_nulo = null;
+            	sound_dardo_simple = null;
+            	sound_dardo_triple = null;
+            }
+        	
+        });
 
         txtRoundNumber.setText(String.valueOf(round));
         clearTirada();
@@ -318,80 +320,83 @@ public class X01ScreenController extends BaseGuiController {
 
         int puntosParaRestar = 0;
         DatosTirada datosTirada = codigoAPuntos(nuevosPuntos);
-        if (datosTirada.getPuntos() == 0) {
-            playMp3(sound_dardo_nulo);
-        }
-        if (datosTirada.isTriple()) {
-            playMp3(sound_dardo_triple);
-        } else {
-            playMp3(sound_dardo_simple);
-        }
-        puntosParaRestar = datosTirada.getPuntos();
-
-        int puntosAcumulados = players.get(jugadorActual).getPuntuacion() - puntosParaRestar;
-        if (puntosAcumulados == 0) {
-            if (gameInfo.isDoubleInDoubleOutType() && !datosTirada.isDoble()) {
-                players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
-                players.get(jugadorActual).setPuntuacion(puntuacionInicial);
-            } else {
-                players.get(jugadorActual).setPuntuacion(puntosAcumulados);
-                players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
-                if (winner == null) {
-                    winner = players.get(jugadorActual);
-                }
-            }
-            waitInfo.setWaiting(true);
-
-            Platform.runLater(() -> {
-                CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
-                dialog.setOnHidden(dialogEvent -> {
-                	nextPlayer();
-                	waitInfo.setWaiting(false);
-                });
-//                dialog.openDialog();
-                dialog.showAndWait();
-                System.out.println("ButtonPressed " + dialog.getButtonPressed());
-
-            });
-        } else if (puntosAcumulados > 0) {
-            players.get(jugadorActual).setPuntuacion(puntosAcumulados);
-            players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
-            
-            tirada++;
-
-            if (tirada > 3) {
-                if ((jugadorActual == (players.size() - 1) &&
-                        (winner != null) || round == gameInfo.getRounds())) {
-                    nextPlayer();
-                } else {
-                    waitInfo.setWaiting(true);
-                    Platform.runLater(() -> {
-                        CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
-                        dialog.setOnHidden(dialogEvent -> {
-                        	nextPlayer();
-                        	waitInfo.setWaiting(false);
-                        });
-//                      dialog.openDialog();
-                        dialog.showAndWait();
-                        System.out.println("ButtonPressed " + dialog.getButtonPressed());
-
-                    });
-                }
-            }
-        } else {
-            waitInfo.setWaiting(true);
-
-            Platform.runLater(() -> {
-                CustomDialog dialog = new CustomDialog("Te has pasado", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar", "Continuar", null);
-                dialog.setOnHidden(dialogEvent -> {
-                    players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
-                    players.get(jugadorActual).setPuntuacion(puntuacionInicial);
-                    nextPlayer();
-                    waitInfo.setWaiting(false);
-                });
-                dialog.showAndWait();
-
-            });
+        if (datosTirada != null)
+        {
+	        if (datosTirada.getPuntos() == 0) {
+	            playMp3(sound_dardo_nulo);
+	        }
+	        if (datosTirada.isTriple()) {
+	            playMp3(sound_dardo_triple);
+	        } else {
+	            playMp3(sound_dardo_simple);
+	        }
+	        puntosParaRestar = datosTirada.getPuntos();
+	
+	        int puntosAcumulados = players.get(jugadorActual).getPuntuacion() - puntosParaRestar;
+	        if (puntosAcumulados == 0) {
+	            if (gameInfo.isDoubleInDoubleOutType() && !datosTirada.isDoble()) {
+	                players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
+	                players.get(jugadorActual).setPuntuacion(puntuacionInicial);
+	            } else {
+	                players.get(jugadorActual).setPuntuacion(puntosAcumulados);
+	                players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
+	                if (winner == null) {
+	                    winner = players.get(jugadorActual);
+	                }
+	            }
+	            waitInfo.setWaiting(true);
+	
+	            Platform.runLater(() -> {
+	                CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
+	                dialog.setOnHidden(dialogEvent -> {
+	                	nextPlayer();
+	                	waitInfo.setWaiting(false);
+	                });
+	//                dialog.openDialog();
+	                dialog.showAndWait();
+	                System.out.println("ButtonPressed " + dialog.getButtonPressed());
+	
+	            });
+	        } else if (puntosAcumulados > 0) {
+	            players.get(jugadorActual).setPuntuacion(puntosAcumulados);
+	            players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntosAcumulados));
+	            
+	            tirada++;
+	
+	            if (tirada > 3) {
+	                if ((jugadorActual == (players.size() - 1) &&
+	                        (winner != null) || round == gameInfo.getRounds())) {
+	                    nextPlayer();
+	                } else {
+	                    waitInfo.setWaiting(true);
+	                    Platform.runLater(() -> {
+	                        CustomDialog dialog = new CustomDialog("Retirar dardos", "Retire los dardos\ny pulse continuar", "Continuar", null);
+	                        dialog.setOnHidden(dialogEvent -> {
+	                        	nextPlayer();
+	                        	waitInfo.setWaiting(false);
+	                        });
+	//                      dialog.openDialog();
+	                        dialog.showAndWait();
+	                        System.out.println("ButtonPressed " + dialog.getButtonPressed());
+	
+	                    });
+	                }
+	            }
+	        } else {
+	            waitInfo.setWaiting(true);
+	
+	            Platform.runLater(() -> {
+	                CustomDialog dialog = new CustomDialog("Te has pasado", "Has excedido la puntuación.\nRetira los dardos y pulsa continuar", "Continuar", null);
+	                dialog.setOnHidden(dialogEvent -> {
+	                    players.get(jugadorActual).getTextViewPuntuacion().setText(String.valueOf(puntuacionInicial));
+	                    players.get(jugadorActual).setPuntuacion(puntuacionInicial);
+	                    nextPlayer();
+	                    waitInfo.setWaiting(false);
+	                });
+	                dialog.showAndWait();
+	
+	            });
+	        }
         }
     }
 
@@ -452,10 +457,13 @@ public class X01ScreenController extends BaseGuiController {
         } else if (nuevosPuntos.isBlank() || nuevosPuntos.trim().equals("0")) {
             datosTirada = actualizaTirada(0, (String) null);
         } else {
-        	
-            lados = nuevosPuntos.split("x");
-            int puntuacionTirada = Integer.parseInt(lados[0]) * Integer.parseInt(lados[1]);
-            datosTirada = actualizaTirada(puntuacionTirada, lados);
+        	try {
+        		lados = nuevosPuntos.split("x");
+        		int puntuacionTirada = Integer.parseInt(lados[0]) * Integer.parseInt(lados[1]);
+        		datosTirada = actualizaTirada(puntuacionTirada, lados);
+        	}catch(Exception e) {
+        		datosTirada = null;
+        	}
         }
         return datosTirada;
     }
@@ -540,18 +548,20 @@ public class X01ScreenController extends BaseGuiController {
     }
 
     private void playMp3(MediaPlayer player) {
-    	Runnable runSound = new Runnable() {
-				
-			@Override
-			public void run() {
-	            if (null != player) {
-	            	player.setVolume(1.0);
-	            	player.seek(Duration.ZERO);
-	                player.play();
-	            }
-			}
-		};
-		runSound.run();
+    	if (player != null) {
+	    	Runnable runSound = new Runnable() {
+					
+				@Override
+				public void run() {
+		            if (null != player) {
+		            	player.setVolume(1.0);
+		            	player.seek(Duration.ZERO);
+		                player.play();
+		            }
+				}
+			};
+			runSound.run();
+    	}
     }
     
 

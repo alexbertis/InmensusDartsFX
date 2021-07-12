@@ -1,7 +1,6 @@
 package org.brontapps.inmensusdartsfx.beans;
 
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class Gamer {
